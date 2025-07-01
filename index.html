@@ -3,155 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beacon of New Beginnings - Supporting Survivors with Hope and Care</title>
-    <meta name="description" content="Safe support for survivors of domestic violence, abuse, and homelessness in Ghana. Access emergency services, resources, and community support.">
-    <meta name="keywords" content="domestic violence support, Ghana NGO, survivor assistance, emergency services, safe shelter, legal aid">
+    <title>Beacon of New Beginnings - Supporting Survivors in Ghana</title>
+    <meta name="description" content="Beacon of New Beginnings provides safety, healing, and empowerment to survivors of abuse and homelessness in Ghana through shelter, counseling, legal support, and livelihood programs.">
+    <meta name="keywords" content="domestic violence, abuse survivors, homeless support, Ghana NGO, women's shelter, legal aid, counseling services">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://beaconnewbeginnings.org/">
-    <meta property="og:title" content="Beacon of New Beginnings - Walking the path from pain to power, hand in hand">
-    <meta property="og:description" content="Safe support for survivors of domestic violence, abuse, and homelessness in Ghana.">
-    <meta property="og:image" content="https://beaconnewbeginnings.org/assets/beacon-social.png">
+    <meta property="og:url" content="https://beaconnewbeginnings.org">
+    <meta property="og:title" content="Beacon of New Beginnings - Supporting Survivors in Ghana">
+    <meta property="og:description" content="Providing safety, healing, and empowerment to survivors of abuse and homelessness">
+    <meta property="og:image" content="https://beaconnewbeginnings.org/images/logo.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://beaconnewbeginnings.org/">
-    <meta property="twitter:title" content="Beacon of New Beginnings - Supporting Survivors with Hope and Care">
-    <meta property="twitter:description" content="Safe support for survivors of domestic violence, abuse, and homelessness in Ghana.">
-    <meta property="twitter:image" content="https://beaconnewbeginnings.org/assets/beacon-social.png">
+    <meta property="twitter:url" content="https://beaconnewbeginnings.org">
+    <meta property="twitter:title" content="Beacon of New Beginnings - Supporting Survivors in Ghana">
+    <meta property="twitter:description" content="Providing safety, healing, and empowerment to survivors of abuse and homelessness">
+    <meta property="twitter:image" content="https://beaconnewbeginnings.org/images/logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏮</text></svg>">
     
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/beacon-icon-180.png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        :root {
-            --primary-color: #2E7D5C;
-            --primary-dark: #1B5E42;
-            --primary-light: #4CAF50;
-            --accent-color: #FFA726;
-            --accent-light: #FFCC80;
-            --emergency-color: #D32F2F;
-            --success-color: #388E3C;
-            --background-color: #F8F9FA;
-            --surface-color: #FFFFFF;
-            --text-color: #212121;
-            --text-light: #757575;
-            --safe-blue: #64B5F6;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
+            color: #333;
+            scroll-behavior: smooth;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-
+        
         /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            background: linear-gradient(135deg, #2E8B57, #3CB371);
             color: white;
-            padding: 20px 0;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
-        .header-content {
+        
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
+        
         .logo-section {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
-        .logo {
-            width: 60px;
-            height: 60px;
+        
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+        
+        .logo-fallback {
+            width: 50px;
+            height: 50px;
             background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            color: var(--primary-color);
-            font-weight: bold;
+            color: #2E8B57;
         }
-
+        
         .brand-text h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
-
+        
         .tagline {
             font-size: 0.9rem;
             opacity: 0.9;
         }
-
-        .emergency-button {
-            background: var(--emergency-color);
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
             color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            font-weight: 500;
+            transition: opacity 0.3s;
+            cursor: pointer;
         }
-
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .emergency-button {
+            background: #dc3545;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
         .emergency-button:hover {
-            background: #B71C1C;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+            background: #c82333;
         }
-
+        
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--safe-blue));
+            background: linear-gradient(135deg, #2E8B57, #FF6B35);
             color: white;
-            padding: 80px 0;
+            padding: 120px 0 80px;
             text-align: center;
         }
-
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             line-height: 1.2;
         }
-
+        
         .hero p {
             font-size: 1.3rem;
-            margin-bottom: 40px;
-            opacity: 0.95;
+            margin-bottom: 2rem;
+            opacity: 0.9;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
-
+        
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
-
+        
         .btn {
             padding: 15px 30px;
             border: none;
@@ -159,524 +182,607 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            text-decoration: none;
             transition: all 0.3s ease;
-            display: inline-block;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
-
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
         .btn-primary {
-            background: var(--accent-color);
-            color: white;
+            background: white;
+            color: #2E8B57;
         }
-
-        .btn-outline {
+        
+        .btn-secondary {
             background: transparent;
             color: white;
             border: 2px solid white;
         }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* Features Section */
-        .features {
+        
+        /* Services Section */
+        .services {
             padding: 80px 0;
-            background: white;
+            background: #f8f9fa;
         }
-
+        
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #2E8B57;
         }
-
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 60px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .features-grid {
+        
+        .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            gap: 2rem;
         }
-
-        .feature-card {
+        
+        .service-card {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            border-top: 4px solid var(--primary-color);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
-
-        .feature-card:hover {
+        
+        .service-card:hover {
             transform: translateY(-5px);
         }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            margin-bottom: 20px;
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #FF6B35;
         }
-
-        .feature-card h3 {
+        
+        .service-card h3 {
             font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
+            margin-bottom: 1rem;
+            color: #2E8B57;
         }
-
-        /* App Download Section */
-        .app-download {
-            background: var(--background-color);
+        
+        /* Get Help Section */
+        .get-help {
             padding: 80px 0;
-            text-align: center;
+            background: white;
         }
-
-        .app-preview {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            margin-top: 50px;
-        }
-
-        .app-info {
-            flex: 1;
-            text-align: left;
-        }
-
-        .app-info h3 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-
-        .app-info p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            color: var(--text-light);
-        }
-
-        .download-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .download-btn {
-            background: var(--text-color);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .download-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .phone-mockup {
-            flex: 1;
-            max-width: 300px;
-            background: var(--text-color);
-            border-radius: 25px;
-            padding: 20px;
-            color: white;
-            text-align: center;
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Safety Section */
-        .safety {
-            background: linear-gradient(135deg, var(--emergency-color), #E57373);
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .safety h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .emergency-contacts {
+        
+        .help-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-
-        .emergency-card {
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
+        
+        .help-card {
+            background: linear-gradient(135deg, #2E8B57, #3CB371);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
         }
-
-        .emergency-card h3 {
+        
+        .help-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .help-card.emergency {
+            background: linear-gradient(135deg, #dc3545, #ff6b6b);
+        }
+        
+        .help-card h3 {
             font-size: 1.5rem;
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
-
-        .emergency-card .phone {
+        
+        .help-card .phone {
             font-size: 2rem;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 1rem 0;
         }
-
+        
+        .help-card a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2E8B57;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2E8B57;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            background: #2E8B57;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background: #1e5f3f;
+        }
+        
         /* Footer */
         footer {
-            background: var(--primary-dark);
+            background: #2E8B57;
             color: white;
             padding: 50px 0 30px;
         }
-
+        
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
-
+        
         .footer-section h3 {
-            margin-bottom: 20px;
-            color: var(--accent-light);
+            margin-bottom: 1rem;
+            color: #FFA500;
         }
-
-        .footer-section a {
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
             color: white;
             text-decoration: none;
-            display: block;
-            margin-bottom: 10px;
             opacity: 0.8;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
-
-        .footer-section a:hover {
+        
+        .footer-section ul li a:hover {
             opacity: 1;
-            color: var(--accent-light);
         }
-
+        
         .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.2);
-            padding-top: 30px;
             text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
             opacity: 0.8;
         }
-
-        /* Responsive Design */
+        
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .header-content {
+            .nav-links {
+                display: none;
                 flex-direction: column;
-                gap: 20px;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #2E8B57;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             }
-
-            .hero h2 {
-                font-size: 2rem;
+            
+            .nav-links.active {
+                display: flex;
             }
-
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
             .hero p {
                 font-size: 1.1rem;
             }
-
+            
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
-            .app-preview {
-                flex-direction: column;
-                text-align: center;
+            
+            .form-container {
+                padding: 2rem 1rem;
             }
-
-            .app-info {
-                text-align: center;
-            }
-        }
-
-        /* Accessibility */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        /* Focus styles for keyboard navigation */
-        .btn:focus,
-        .emergency-button:focus,
-        .download-btn:focus {
-            outline: 2px solid var(--accent-color);
-            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <div class="logo">🏮</div>
-                    <div class="brand-text">
-                        <h1>Beacon of New Beginnings</h1>
-                        <div class="tagline">Walking the path from pain to power, hand in hand</div>
-                    </div>
+        <nav class="container">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="images/logo.png" alt="Beacon of New Beginnings Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-fallback" style="display: none;">🏮</div>
                 </div>
-                <a href="tel:0800800800" class="emergency-button" aria-label="Call emergency hotline">
-                    🚨 Emergency: 0800-800-800
+                <div class="brand-text">
+                    <h1>Beacon of New Beginnings</h1>
+                    <div class="tagline">Walking the path from pain to power, hand in hand</div>
+                </div>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+                <li><a href="#services" onclick="scrollToSection('services')">Services</a></li>
+                <li><a href="#help" onclick="scrollToSection('help')">Get Help</a></li>
+                <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
+            </ul>
+            <a href="tel:+233501234567" class="emergency-button">🚨 Crisis Line</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Providing Safety, Healing, and Empowerment</h1>
+            <p>Supporting survivors of abuse and homelessness in Ghana through comprehensive care, legal advocacy, and sustainable empowerment programs.</p>
+            <div class="cta-buttons">
+                <a href="#help" class="btn btn-primary" onclick="scrollToSection('help')">
+                    <i class="fas fa-hands-helping"></i>
+                    Get Help Now
+                </a>
+                <a href="#services" class="btn btn-secondary" onclick="scrollToSection('services')">
+                    <i class="fas fa-info-circle"></i>
+                    Learn More
                 </a>
             </div>
         </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <h2>Safe Support When You Need It Most</h2>
-            <p>A secure mobile app providing emergency services, resources, and community support for survivors of domestic violence, abuse, and homelessness in Ghana.</p>
-            <div class="cta-buttons">
-                <a href="#download" class="btn btn-primary">Download App</a>
-                <a href="#features" class="btn btn-outline">Learn More</a>
-            </div>
-        </div>
     </section>
 
-    <section id="features" class="features">
+    <!-- Services Section -->
+    <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">How We Help</h2>
-            <p class="section-subtitle">Comprehensive support designed with survivors' safety and dignity in mind</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🚨</div>
-                    <h3>Emergency Services</h3>
-                    <p>Instant access to emergency hotlines, location sharing with trusted contacts, and anonymous crisis support available 24/7.</p>
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>Emergency Shelter</h3>
+                    <p>Safe, secure accommodation for survivors and their children, with 24/7 security and support staff.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🏠</div>
-                    <h3>Resource Directory</h3>
-                    <p>Find nearby shelters, legal aid, medical services, counseling, and employment assistance with real-time availability.</p>
+                <div class="service-card">
+                    <div class="service-icon">💬</div>
+                    <h3>Counseling & Therapy</h3>
+                    <p>Individual and group therapy sessions with trauma-informed care specialists and mental health professionals.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🤝</div>
-                    <h3>Community Support</h3>
-                    <p>Connect with moderated support groups, access educational resources, and share in healing journeys - all anonymously.</p>
+                <div class="service-card">
+                    <div class="service-icon">⚖️</div>
+                    <h3>Legal Advocacy</h3>
+                    <p>Legal representation, court accompaniment, and assistance with protective orders and family law matters.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Privacy Protection</h3>
-                    <p>Use all features anonymously with encrypted data, quick exit options, and trauma-informed design for your safety.</p>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Job Training</h3>
+                    <p>Vocational skills development, computer literacy, and entrepreneurship programs for economic empowerment.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📍</div>
-                    <h3>Location-Based Help</h3>
-                    <p>Find the closest resources, calculate distances, and get directions to safe spaces near you in Ghana.</p>
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3>Education Support</h3>
+                    <p>Educational opportunities, literacy programs, and academic support for survivors and their children.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💪</div>
-                    <h3>Empowerment Tools</h3>
-                    <p>Safety planning resources, financial independence guides, and success stories to inspire your journey.</p>
+                <div class="service-card">
+                    <div class="service-icon">🏥</div>
+                    <h3>Healthcare Access</h3>
+                    <p>Medical care coordination, health education, and connections to healthcare providers and specialists.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="download" class="app-download">
+    <!-- Get Help Section -->
+    <section id="help" class="get-help">
         <div class="container">
-            <h2 class="section-title">Get the App</h2>
-            <p class="section-subtitle">Available for iOS and Android - Download securely and start your journey to safety</p>
+            <h2 class="section-title">Get Help Today</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666; max-width: 600px; margin: 0 auto;">You are not alone. Help is available 24/7</p>
             
-            <div class="app-preview">
-                <div class="app-info">
-                    <h3>Download Beacon of New Beginnings</h3>
-                    <p>The app is designed to be safe, private, and easy to use even in stressful situations. All features work anonymously, and your data is protected with industry-standard encryption.</p>
-                    <p><strong>Key Features:</strong></p>
-                    <ul style="margin: 20px 0; text-align: left;">
-                        <li>Anonymous access to all features</li>
-                        <li>Offline functionality for resources</li>
-                        <li>Quick exit and privacy modes</li>
-                        <li>Multi-language support</li>
-                        <li>Trauma-informed design</li>
-                    </ul>
-                    <div class="download-buttons">
-                        <a href="#" class="download-btn">📱 App Store</a>
-                        <a href="#" class="download-btn">🤖 Google Play</a>
-                        <a href="#beta" class="download-btn">🧪 Beta Test</a>
+            <div class="help-grid">
+                <div class="help-card emergency">
+                    <h3>🚨 Emergency Situation</h3>
+                    <p>If you are in immediate danger:</p>
+                    <div class="phone">191</div>
+                    <p><a href="tel:191">Call Police Now</a></p>
+                </div>
+                <div class="help-card">
+                    <h3>📞 Crisis Hotline</h3>
+                    <p>24/7 crisis support and counseling</p>
+                    <div class="phone">+233 50 123 4567</div>
+                    <p><a href="tel:+233501234567">Call Now</a></p>
+                </div>
+                <div class="help-card">
+                    <h3>💬 Anonymous Support</h3>
+                    <p>Get help while protecting your privacy</p>
+                    <br>
+                    <a href="#contact" class="btn btn-primary" onclick="scrollToSection('contact')" style="background: white; color: #2E8B57; padding: 10px 20px; border-radius: 8px;">Submit Request</a>
+                </div>
+                <div class="help-card">
+                    <h3>🏠 Safe Shelter</h3>
+                    <p>Immediate safe accommodation available</p>
+                    <br>
+                    <p><strong>Call for immediate placement</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="contact-form">
+        <div class="container">
+            <h2 class="section-title">Anonymous Support Request</h2>
+            <div class="form-container">
+                <div class="success-message" id="successMessage">
+                    <strong>Your request has been submitted successfully.</strong> We will respond as soon as possible while respecting your privacy.
+                </div>
+                
+                <form id="supportForm" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label for="helpType">Type of help needed:</label>
+                        <select id="helpType" name="helpType" required>
+                            <option value="">Select...</option>
+                            <option value="emergency">Emergency Assistance</option>
+                            <option value="shelter">Shelter & Accommodation</option>
+                            <option value="legal">Legal Support</option>
+                            <option value="counseling">Counseling & Therapy</option>
+                            <option value="job-training">Job Training & Education</option>
+                            <option value="healthcare">Healthcare Access</option>
+                            <option value="other">Other Support</option>
+                        </select>
                     </div>
-                </div>
-                <div class="phone-mockup">
-                    <h4>Beacon App Preview</h4>
-                    <div style="margin: 20px 0;">
-                        <div style="background: var(--primary-color); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                            🚨 Emergency Services
-                        </div>
-                        <div style="background: var(--accent-color); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                            🏠 Find Resources
-                        </div>
-                        <div style="background: var(--safe-blue); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                            🤝 Community Support
-                        </div>
-                        <div style="background: var(--success-color); padding: 15px; border-radius: 8px; margin: 10px 0;">
-                            👤 Anonymous Mode
-                        </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Describe your situation (optional):</label>
+                        <textarea id="description" name="description" placeholder="Share what you're comfortable sharing..."></textarea>
                     </div>
-                    <p style="font-size: 0.9rem; opacity: 0.8;">Safe • Secure • Private</p>
-                </div>
+                    
+                    <div class="form-group">
+                        <label for="location">General location (optional):</label>
+                        <input type="text" id="location" name="location" placeholder="e.g., Accra, Kumasi">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency">Urgency level:</label>
+                        <select id="urgency" name="urgency" required>
+                            <option value="low">Low - Can wait a few days</option>
+                            <option value="medium" selected>Medium - Within a few days</option>
+                            <option value="high">High - As soon as possible</option>
+                            <option value="critical">Critical - Emergency</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactMethod">How can we follow up? (optional):</label>
+                        <select id="contactMethod" name="contactMethod" onchange="toggleContactInfo()">
+                            <option value="">No contact needed</option>
+                            <option value="phone">Phone call</option>
+                            <option value="sms">Text message</option>
+                            <option value="email">Email</option>
+                            <option value="in-person">In-person meeting</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="contactInfoGroup" style="display: none;">
+                        <label for="contactInfo">Contact information:</label>
+                        <input type="text" id="contactInfo" name="contactInfo" placeholder="Phone number or email">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Anonymous Request</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <section class="safety">
-        <div class="container">
-            <h2>Emergency Contacts</h2>
-            <p>If you're in immediate danger, contact these services right away</p>
-            
-            <div class="emergency-contacts">
-                <div class="emergency-card">
-                    <h3>Ghana Emergency Services</h3>
-                    <div class="phone">999</div>
-                    <p>Police, Fire, Medical Emergency</p>
-                </div>
-                
-                <div class="emergency-card">
-                    <h3>Domestic Violence Hotline</h3>
-                    <div class="phone">0800-800-800</div>
-                    <p>24/7 Crisis Support</p>
-                </div>
-                
-                <div class="emergency-card">
-                    <h3>Beacon Support Line</h3>
-                    <div class="phone">+233-123-456-789</div>
-                    <p>Monday-Friday 8AM-6PM</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>About Beacon</h3>
-                    <p>Beacon of New Beginnings is a Ghanaian NGO dedicated to supporting survivors of domestic violence, abuse, and homelessness through comprehensive digital and community services.</p>
+                    <h3>Beacon of New Beginnings</h3>
+                    <p>Providing safety, healing, and empowerment to survivors of abuse and homelessness in Ghana.</p>
+                    <br>
+                    <p><strong>Office Hours:</strong><br>
+                    Monday - Friday: 8:00 AM - 6:00 PM<br>
+                    Crisis Line: 24/7</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#services" onclick="scrollToSection('services')">Our Services</a></li>
+                        <li><a href="#help" onclick="scrollToSection('help')">Get Help</a></li>
+                        <li><a href="#contact" onclick="scrollToSection('contact')">Contact Us</a></li>
+                        <li><a href="tel:+233501234567">Crisis Hotline</a></li>
+                    </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h3>Resources</h3>
-                    <a href="#safety-planning">Safety Planning</a>
-                    <a href="#legal-aid">Legal Aid Directory</a>
-                    <a href="#shelter-network">Shelter Network</a>
-                    <a href="#counseling">Counseling Services</a>
-                    <a href="#job-training">Job Training Programs</a>
+                    <ul>
+                        <li><a href="https://dovvsu.police.gov.gh" target="_blank">DOVVSU Ghana</a></li>
+                        <li><a href="https://wildafghana.org" target="_blank">WiLDAF Ghana</a></li>
+                        <li><a href="https://moh.gov.gh" target="_blank">Ministry of Health</a></li>
+                        <li><a href="tel:191">Emergency: 191</a></li>
+                    </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Support</h3>
-                    <a href="#contact">Contact Us</a>
-                    <a href="#privacy">Privacy Policy</a>
-                    <a href="#terms">Terms of Service</a>
-                    <a href="#feedback">Feedback</a>
-                    <a href="#volunteer">Volunteer</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Connect</h3>
-                    <a href="mailto:support@beaconnewbeginnings.org">support@beaconnewbeginnings.org</a>
-                    <a href="tel:+233123456789">+233-123-456-789</a>
-                    <p>Accra, Ghana</p>
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><strong>📍 Main Office:</strong><br>123 Hope Street, East Legon, Accra</li>
+                        <li><strong>📞 Crisis Line:</strong> <a href="tel:+233501234567">+233 50 123 4567</a></li>
+                        <li><strong>📧 Email:</strong> <a href="mailto:info@beaconnewbeginnings.org">info@beaconnewbeginnings.org</a></li>
+                    </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Beacon of New Beginnings. All rights reserved. | Your safety matters. Your story matters. You matter.</p>
+                <p>&copy; 2024 Beacon of New Beginnings. All rights reserved.</p>
+                <p><strong>If you are in immediate danger, call 191 (Police) or 193 (Ambulance)</strong></p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Simple privacy-focused analytics (no tracking)
-        document.addEventListener('DOMContentLoaded', function() {
-            // Log page view (local only)
-            const pageView = {
-                timestamp: new Date().toISOString(),
-                page: 'home',
-                userAgent: navigator.userAgent.substring(0, 50) // Limited for privacy
-            };
-            
-            // Store locally for basic metrics (no external sending)
-            if (localStorage.getItem('beacon_visits')) {
-                const visits = JSON.parse(localStorage.getItem('beacon_visits'));
-                visits.push(pageView);
-                if (visits.length > 10) visits.shift(); // Keep only last 10
-                localStorage.setItem('beacon_visits', JSON.stringify(visits));
-            } else {
-                localStorage.setItem('beacon_visits', JSON.stringify([pageView]));
+        // Smooth scrolling function
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const elementPosition = element.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: elementPosition,
+                    behavior: 'smooth'
+                });
             }
             
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
+            // Close mobile menu if open
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+        
+        // Contact info toggle
+        function toggleContactInfo() {
+            const contactMethod = document.getElementById('contactMethod').value;
+            const contactInfoGroup = document.getElementById('contactInfoGroup');
             
-            // Emergency button tracking (local only for safety metrics)
-            document.querySelector('.emergency-button').addEventListener('click', function() {
-                const emergencyClick = {
-                    timestamp: new Date().toISOString(),
-                    action: 'emergency_clicked'
-                };
-                
-                const emergencyCalls = JSON.parse(localStorage.getItem('beacon_emergency_clicks') || '[]');
-                emergencyCalls.push(emergencyClick);
-                if (emergencyCalls.length > 5) emergencyCalls.shift();
-                localStorage.setItem('beacon_emergency_clicks', JSON.stringify(emergencyCalls));
-            });
+            if (contactMethod && contactMethod !== '') {
+                contactInfoGroup.style.display = 'block';
+                document.getElementById('contactInfo').placeholder = 
+                    contactMethod === 'email' ? 'Your email address' : 
+                    contactMethod === 'phone' || contactMethod === 'sms' ? 'Your phone number' : 
+                    'Your preferred contact information';
+            } else {
+                contactInfoGroup.style.display = 'none';
+            }
+        }
+        
+        // Form submission
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('supportForm').reset();
+            document.getElementById('contactInfoGroup').style.display = 'none';
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(46, 139, 87, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #2E8B57, #3CB371)';
+                header.style.backdropFilter = 'none';
+            }
         });
         
-        // Keyboard accessibility
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                // Quick exit functionality - navigate away for safety
-                window.location.href = 'https://www.google.com/search?q=weather';
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+        
+        // Keyboard accessibility - ESC key to close mobile menu
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('active');
             }
         });
     </script>
