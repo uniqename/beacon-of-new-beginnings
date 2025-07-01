@@ -1,5 +1,5 @@
 name: ngo_support_app
-description: "Beacon of New Beginnings - Providing safety, healing, and empowerment to survivors of abuse and homelessness"
+description: "Beacon of New Beginnings - Walking the path from pain to power, hand in hand"
 publish_to: 'none'
 
 # The following defines the version and build number for your application.
@@ -29,12 +29,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.15.3
-  cloud_firestore: ^4.13.6
-  firebase_messaging: ^14.7.10
-  firebase_storage: ^11.5.6
-  google_maps_flutter: ^2.5.0
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   url_launcher: ^6.2.2
@@ -44,6 +38,11 @@ dependencies:
   intl: ^0.19.0
   encrypt: ^5.0.1
   uuid: ^4.2.1
+  http: ^1.1.2
+  path_provider: ^2.1.2
+  path: ^1.8.3
+  sqflite: ^2.3.2
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +67,7 @@ flutter:
   uses-material-design: true
   
   assets:
+    - assets/
     - assets/images/
     - assets/icons/
 

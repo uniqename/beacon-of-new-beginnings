@@ -1,202 +1,93 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-enum ResourceType { 
-  shelter, 
-  counseling, 
-  legal, 
-  medical, 
-  financial, 
-  employment, 
-  education,
-  hotline,
-  emergency 
-}
-
-enum ResourceStatus { available, unavailable, limited }
-
 class Resource {
   final String id;
   final String name;
   final String description;
-  final ResourceType type;
-  final ResourceStatus status;
-  final String? address;
-  final String? phone;
-  final String? email;
-  final String? website;
-  final List<String> services;
-  final Map<String, String> operatingHours;
-  final bool requiresAppointment;
-  final bool is24Hours;
+  final String category;
+  final String phoneNumber;
+  final String website;
+  final String address;
+  final bool isEmergency;
   final double? latitude;
   final double? longitude;
-  final List<String> eligibilityCriteria;
-  final String? contactPerson;
-  final DateTime createdAt;
-  final DateTime? updatedAt;
-  final int capacity;
-  final int currentOccupancy;
+  final String? email;
+  final String? operatingHours;
+  final String? availabilityStatus;
+  final bool verified;
 
   const Resource({
     required this.id,
     required this.name,
     required this.description,
-    required this.type,
-    required this.status,
-    this.address,
-    this.phone,
-    this.email,
-    this.website,
-    this.services = const [],
-    this.operatingHours = const {},
-    this.requiresAppointment = false,
-    this.is24Hours = false,
+    required this.category,
+    required this.phoneNumber,
+    required this.website,
+    required this.address,
+    required this.isEmergency,
     this.latitude,
     this.longitude,
-    this.eligibilityCriteria = const [],
-    this.contactPerson,
-    required this.createdAt,
-    this.updatedAt,
-    this.capacity = 0,
-    this.currentOccupancy = 0,
+    this.email,
+    this.operatingHours,
+    this.availabilityStatus,
+    this.verified = false,
   });
 
-  factory Resource.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory Resource.fromMap(Map<String, dynamic> map) {
     return Resource(
-      id: doc.id,
-      name: data['name'] ?? '',
-      description: data['description'] ?? '',
-      type: ResourceType.values.firstWhere(
-        (e) => e.toString().split('.').last == data['type'],
-        orElse: () => ResourceType.emergency,
-      ),
-      status: ResourceStatus.values.firstWhere(
-        (e) => e.toString().split('.').last == data['status'],
-        orElse: () => ResourceStatus.available,
-      ),
-      address: data['address'],
-      phone: data['phone'],
-      email: data['email'],
-      website: data['website'],
-      services: data['services'] != null 
-          ? List<String>.from(data['services']) 
-          : [],
-      operatingHours: data['operatingHours'] != null 
-          ? Map<String, String>.from(data['operatingHours']) 
-          : {},
-      requiresAppointment: data['requiresAppointment'] ?? false,
-      is24Hours: data['is24Hours'] ?? false,
-      latitude: data['latitude']?.toDouble(),
-      longitude: data['longitude']?.toDouble(),
-      eligibilityCriteria: data['eligibilityCriteria'] != null 
-          ? List<String>.from(data['eligibilityCriteria']) 
-          : [],
-      contactPerson: data['contactPerson'],
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
-      updatedAt: data['updatedAt'] != null 
-          ? (data['updatedAt'] as Timestamp).toDate() 
-          : null,
-      capacity: data['capacity'] ?? 0,
-      currentOccupancy: data['currentOccupancy'] ?? 0,
+      id: map['id'] ?? '',
+      name: map['name'] ?? '',
+      description: map['description'] ?? '',
+      category: map['category'] ?? '',
+      phoneNumber: map['phone'] ?? map['phoneNumber'] ?? '',
+      website: map['website'] ?? '',
+      address: map['address'] ?? '',
+      isEmergency: map['isEmergency'] ?? false,
+      latitude: map['latitude']?.toDouble(),
+      longitude: map['longitude']?.toDouble(),
+      email: map['email'],
+      operatingHours: map['operating_hours'],
+      availabilityStatus: map['availability_status'],
+      verified: map['verified'] == 1 || map['verified'] == true,
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'description': description,
-      'type': type.toString().split('.').last,
-      'status': status.toString().split('.').last,
-      'address': address,
-      'phone': phone,
-      'email': email,
+      'category': category,
+      'phone': phoneNumber,
       'website': website,
-      'services': services,
-      'operatingHours': operatingHours,
-      'requiresAppointment': requiresAppointment,
-      'is24Hours': is24Hours,
+      'address': address,
+      'isEmergency': isEmergency,
       'latitude': latitude,
       'longitude': longitude,
-      'eligibilityCriteria': eligibilityCriteria,
-      'contactPerson': contactPerson,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
-      'capacity': capacity,
-      'currentOccupancy': currentOccupancy,
+      'email': email,
+      'operating_hours': operatingHours,
+      'availability_status': availabilityStatus,
+      'verified': verified ? 1 : 0,
     };
   }
 
   Resource copyWith({
+    String? id,
     String? name,
     String? description,
-    ResourceType? type,
-    ResourceStatus? status,
-    String? address,
-    String? phone,
-    String? email,
+    String? category,
+    String? phoneNumber,
     String? website,
-    List<String>? services,
-    Map<String, String>? operatingHours,
-    bool? requiresAppointment,
-    bool? is24Hours,
-    double? latitude,
-    double? longitude,
-    List<String>? eligibilityCriteria,
-    String? contactPerson,
-    DateTime? updatedAt,
-    int? capacity,
-    int? currentOccupancy,
+    String? address,
+    bool? isEmergency,
   }) {
     return Resource(
-      id: id,
+      id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
-      type: type ?? this.type,
-      status: status ?? this.status,
-      address: address ?? this.address,
-      phone: phone ?? this.phone,
-      email: email ?? this.email,
+      category: category ?? this.category,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       website: website ?? this.website,
-      services: services ?? this.services,
-      operatingHours: operatingHours ?? this.operatingHours,
-      requiresAppointment: requiresAppointment ?? this.requiresAppointment,
-      is24Hours: is24Hours ?? this.is24Hours,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-      eligibilityCriteria: eligibilityCriteria ?? this.eligibilityCriteria,
-      contactPerson: contactPerson ?? this.contactPerson,
-      createdAt: createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      capacity: capacity ?? this.capacity,
-      currentOccupancy: currentOccupancy ?? this.currentOccupancy,
+      address: address ?? this.address,
+      isEmergency: isEmergency ?? this.isEmergency,
     );
-  }
-
-  bool get hasAvailableSpace => capacity > 0 && currentOccupancy < capacity;
-
-  double get occupancyRate => capacity > 0 ? (currentOccupancy / capacity) : 0.0;
-
-  String get typeDisplayName {
-    switch (type) {
-      case ResourceType.shelter:
-        return 'Shelter';
-      case ResourceType.counseling:
-        return 'Counseling';
-      case ResourceType.legal:
-        return 'Legal Support';
-      case ResourceType.medical:
-        return 'Medical Care';
-      case ResourceType.financial:
-        return 'Financial Aid';
-      case ResourceType.employment:
-        return 'Employment';
-      case ResourceType.education:
-        return 'Education';
-      case ResourceType.hotline:
-        return 'Hotline';
-      case ResourceType.emergency:
-        return 'Emergency';
-    }
   }
 }

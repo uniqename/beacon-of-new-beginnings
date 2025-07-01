@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 enum CaseType { 
   shelter, 
   counseling, 
@@ -32,6 +30,8 @@ class SupportCase {
   final Map<String, dynamic>? metadata;
   final bool isAnonymous;
   final String? location;
+  final double? latitude;
+  final double? longitude;
 
   const SupportCase({
     required this.id,
@@ -50,62 +50,70 @@ class SupportCase {
     this.metadata,
     this.isAnonymous = true,
     this.location,
+    this.latitude,
+    this.longitude,
   });
 
-  factory SupportCase.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory SupportCase.fromMap(Map<String, dynamic> map) {
     return SupportCase(
-      id: doc.id,
-      survivorId: data['survivorId'] ?? '',
-      assignedCounselorId: data['assignedCounselorId'],
+      id: map['id'] ?? '',
+      survivorId: map['survivor_id'] ?? map['user_id'] ?? '',
+      assignedCounselorId: map['assigned_counselor_id'],
       type: CaseType.values.firstWhere(
-        (e) => e.toString().split('.').last == data['type'],
+        (e) => e.toString().split('.').last == map['type'],
         orElse: () => CaseType.emergency,
       ),
       priority: CasePriority.values.firstWhere(
-        (e) => e.toString().split('.').last == data['priority'],
+        (e) => e.toString().split('.').last == map['priority'],
         orElse: () => CasePriority.medium,
       ),
       status: CaseStatus.values.firstWhere(
-        (e) => e.toString().split('.').last == data['status'],
+        (e) => e.toString().split('.').last == map['status'],
         orElse: () => CaseStatus.pending,
       ),
-      title: data['title'] ?? '',
-      description: data['description'] ?? '',
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
-      updatedAt: data['updatedAt'] != null 
-          ? (data['updatedAt'] as Timestamp).toDate() 
+      title: map['title'] ?? '',
+      description: map['description'] ?? '',
+      createdAt: DateTime.parse(map['created_at']),
+      updatedAt: map['updated_at'] != null 
+          ? DateTime.parse(map['updated_at']) 
           : null,
-      completedAt: data['completedAt'] != null 
-          ? (data['completedAt'] as Timestamp).toDate() 
+      completedAt: map['completed_at'] != null 
+          ? DateTime.parse(map['completed_at']) 
           : null,
-      notes: data['notes'] != null ? List<String>.from(data['notes']) : [],
-      attachments: data['attachments'] != null 
-          ? List<String>.from(data['attachments']) 
+      notes: map['notes'] != null 
+          ? List<String>.from(map['notes'].split('|||')) 
           : [],
-      metadata: data['metadata'],
-      isAnonymous: data['isAnonymous'] ?? true,
-      location: data['location'],
+      attachments: map['attachments'] != null 
+          ? List<String>.from(map['attachments'].split('|||')) 
+          : [],
+      metadata: map['metadata'],
+      isAnonymous: map['is_anonymous'] == 1 || map['is_anonymous'] == true,
+      location: map['location'],
+      latitude: map['location_lat']?.toDouble(),
+      longitude: map['location_lng']?.toDouble(),
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toMap() {
     return {
-      'survivorId': survivorId,
-      'assignedCounselorId': assignedCounselorId,
+      'id': id,
+      'survivor_id': survivorId,
+      'assigned_counselor_id': assignedCounselorId,
       'type': type.toString().split('.').last,
       'priority': priority.toString().split('.').last,
       'status': status.toString().split('.').last,
       'title': title,
       'description': description,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
-      'completedAt': completedAt != null ? Timestamp.fromDate(completedAt!) : null,
-      'notes': notes,
-      'attachments': attachments,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
+      'completed_at': completedAt?.toIso8601String(),
+      'notes': notes.join('|||'),
+      'attachments': attachments.join('|||'),
       'metadata': metadata,
-      'isAnonymous': isAnonymous,
+      'is_anonymous': isAnonymous ? 1 : 0,
       'location': location,
+      'location_lat': latitude,
+      'location_lng': longitude,
     };
   }
 
@@ -122,6 +130,8 @@ class SupportCase {
     Map<String, dynamic>? metadata,
     bool? isAnonymous,
     String? location,
+    double? latitude,
+    double? longitude,
   }) {
     return SupportCase(
       id: id,
@@ -140,6 +150,8 @@ class SupportCase {
       metadata: metadata ?? this.metadata,
       isAnonymous: isAnonymous ?? this.isAnonymous,
       location: location ?? this.location,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
@@ -174,6 +186,21 @@ class SupportCase {
         return 'Education';
       case CaseType.emergency:
         return 'Emergency';
+    }
+  }
+
+  String get statusDisplayName {
+    switch (status) {
+      case CaseStatus.pending:
+        return 'Pending';
+      case CaseStatus.active:
+        return 'Active';
+      case CaseStatus.inProgress:
+        return 'In Progress';
+      case CaseStatus.completed:
+        return 'Completed';
+      case CaseStatus.closed:
+        return 'Closed';
     }
   }
 }
