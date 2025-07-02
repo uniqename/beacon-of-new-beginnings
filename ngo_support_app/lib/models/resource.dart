@@ -1,52 +1,101 @@
+enum ResourceType { 
+  shelter, 
+  counseling, 
+  legal, 
+  medical, 
+  financial, 
+  employment, 
+  education,
+  hotline,
+  emergency 
+}
+
+enum ResourceStatus { available, unavailable, limited }
+
 class Resource {
   final String id;
   final String name;
   final String description;
-  final String category;
-  final String phoneNumber;
-  final String website;
-  final String address;
-  final bool isEmergency;
+  final ResourceType type;
+  final ResourceStatus status;
+  final String? address;
+  final String? phone;
+  final String? email;
+  final String? website;
+  final List<String> services;
+  final Map<String, String> operatingHours;
+  final bool requiresAppointment;
+  final bool is24Hours;
   final double? latitude;
   final double? longitude;
-  final String? email;
-  final String? operatingHours;
-  final String? availabilityStatus;
-  final bool verified;
+  final List<String> eligibilityCriteria;
+  final String? contactPerson;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  final int capacity;
+  final int currentOccupancy;
 
   const Resource({
     required this.id,
     required this.name,
     required this.description,
-    required this.category,
-    required this.phoneNumber,
-    required this.website,
-    required this.address,
-    required this.isEmergency,
+    required this.type,
+    required this.status,
+    this.address,
+    this.phone,
+    this.email,
+    this.website,
+    this.services = const [],
+    this.operatingHours = const {},
+    this.requiresAppointment = false,
+    this.is24Hours = false,
     this.latitude,
     this.longitude,
-    this.email,
-    this.operatingHours,
-    this.availabilityStatus,
-    this.verified = false,
+    this.eligibilityCriteria = const [],
+    this.contactPerson,
+    required this.createdAt,
+    this.updatedAt,
+    this.capacity = 0,
+    this.currentOccupancy = 0,
   });
 
-  factory Resource.fromMap(Map<String, dynamic> map) {
+  factory Resource.fromMap(Map<String, dynamic> data) {
     return Resource(
-      id: map['id'] ?? '',
-      name: map['name'] ?? '',
-      description: map['description'] ?? '',
-      category: map['category'] ?? '',
-      phoneNumber: map['phone'] ?? map['phoneNumber'] ?? '',
-      website: map['website'] ?? '',
-      address: map['address'] ?? '',
-      isEmergency: map['isEmergency'] ?? false,
-      latitude: map['latitude']?.toDouble(),
-      longitude: map['longitude']?.toDouble(),
-      email: map['email'],
-      operatingHours: map['operating_hours'],
-      availabilityStatus: map['availability_status'],
-      verified: map['verified'] == 1 || map['verified'] == true,
+      id: data['id'] ?? '',
+      name: data['name'] ?? '',
+      description: data['description'] ?? '',
+      type: ResourceType.values.firstWhere(
+        (e) => e.toString().split('.').last == data['type'],
+        orElse: () => ResourceType.emergency,
+      ),
+      status: ResourceStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == data['status'],
+        orElse: () => ResourceStatus.available,
+      ),
+      address: data['address'],
+      phone: data['phone'],
+      email: data['email'],
+      website: data['website'],
+      services: data['services'] != null 
+          ? List<String>.from(data['services']) 
+          : [],
+      operatingHours: data['operatingHours'] != null 
+          ? Map<String, String>.from(data['operatingHours']) 
+          : {},
+      requiresAppointment: data['requiresAppointment'] ?? false,
+      is24Hours: data['is24Hours'] ?? false,
+      latitude: data['latitude']?.toDouble(),
+      longitude: data['longitude']?.toDouble(),
+      eligibilityCriteria: data['eligibilityCriteria'] != null 
+          ? List<String>.from(data['eligibilityCriteria']) 
+          : [],
+      contactPerson: data['contactPerson'],
+      createdAt: DateTime.parse(data['createdAt'] ?? DateTime.now().toIso8601String()),
+      updatedAt: data['updatedAt'] != null 
+          ? DateTime.parse(data['updatedAt']) 
+          : null,
+      capacity: data['capacity'] ?? 0,
+      currentOccupancy: data['currentOccupancy'] ?? 0,
     );
   }
 
@@ -55,39 +104,51 @@ class Resource {
       'id': id,
       'name': name,
       'description': description,
-      'category': category,
-      'phone': phoneNumber,
-      'website': website,
+      'type': type.toString().split('.').last,
+      'status': status.toString().split('.').last,
       'address': address,
-      'isEmergency': isEmergency,
+      'phone': phone,
+      'email': email,
+      'website': website,
+      'services': services,
+      'operatingHours': operatingHours,
+      'requiresAppointment': requiresAppointment,
+      'is24Hours': is24Hours,
       'latitude': latitude,
       'longitude': longitude,
-      'email': email,
-      'operating_hours': operatingHours,
-      'availability_status': availabilityStatus,
-      'verified': verified ? 1 : 0,
+      'eligibilityCriteria': eligibilityCriteria,
+      'contactPerson': contactPerson,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
+      'capacity': capacity,
+      'currentOccupancy': currentOccupancy,
     };
   }
 
-  Resource copyWith({
-    String? id,
-    String? name,
-    String? description,
-    String? category,
-    String? phoneNumber,
-    String? website,
-    String? address,
-    bool? isEmergency,
-  }) {
-    return Resource(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      category: category ?? this.category,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      website: website ?? this.website,
-      address: address ?? this.address,
-      isEmergency: isEmergency ?? this.isEmergency,
-    );
+  bool get hasAvailableSpace => capacity > 0 && currentOccupancy < capacity;
+
+  double get occupancyRate => capacity > 0 ? (currentOccupancy / capacity) : 0.0;
+
+  String get typeDisplayName {
+    switch (type) {
+      case ResourceType.shelter:
+        return 'Shelter';
+      case ResourceType.counseling:
+        return 'Counseling';
+      case ResourceType.legal:
+        return 'Legal Support';
+      case ResourceType.medical:
+        return 'Medical Care';
+      case ResourceType.financial:
+        return 'Financial Aid';
+      case ResourceType.employment:
+        return 'Employment';
+      case ResourceType.education:
+        return 'Education';
+      case ResourceType.hotline:
+        return 'Hotline';
+      case ResourceType.emergency:
+        return 'Emergency';
+    }
   }
 }

@@ -250,6 +250,28 @@
             color: #2E8B57;
         }
         
+        .service-card.featured {
+            border: 2px solid #2E8B57;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        }
+        
+        .service-features {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        
+        .feature-tag {
+            background: #2E8B57;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
         /* Get Help Section */
         .get-help {
             padding: 80px 0;
@@ -507,37 +529,142 @@
     <!-- Services Section -->
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">Our Services</h2>
+            <h2 class="section-title">BeaconGH Service Divisions</h2>
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <p style="font-size: 1.2rem; color: #666; max-width: 800px; margin: 0 auto;">
+                    🤖 <strong>AI-Powered Resource Matching</strong> - Our smart system prioritizes BeaconGH services first, ensuring you get the best possible support tailored to your specific needs.
+                </p>
+            </div>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card featured">
                     <div class="service-icon">🏠</div>
-                    <h3>Emergency Shelter</h3>
-                    <p>Safe, secure accommodation for survivors and their children, with 24/7 security and support staff.</p>
+                    <h3>BeaconGH Shelter Services</h3>
+                    <p>Safe, secure emergency and transitional housing with 24/7 support staff. <strong>85% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Emergency shelter placement</span>
+                        <span class="feature-tag">✓ Transitional housing</span>
+                        <span class="feature-tag">✓ Safety planning</span>
+                        <span class="feature-tag">📧 Jobs Available</span>
+                    </div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">💬</div>
-                    <h3>Counseling & Therapy</h3>
-                    <p>Individual and group therapy sessions with trauma-informed care specialists and mental health professionals.</p>
-                </div>
-                <div class="service-card">
+                <div class="service-card featured">
                     <div class="service-icon">⚖️</div>
-                    <h3>Legal Advocacy</h3>
-                    <p>Legal representation, court accompaniment, and assistance with protective orders and family law matters.</p>
+                    <h3>BeaconGH Legal Assistance</h3>
+                    <p>Comprehensive legal advocacy and representation for survivors. <strong>92% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Legal representation</span>
+                        <span class="feature-tag">✓ Court accompaniment</span>
+                        <span class="feature-tag">✓ Protective orders</span>
+                        <span class="feature-tag">📧 Jobs Available</span>
+                    </div>
+                </div>
+                <div class="service-card featured">
+                    <div class="service-icon">💬</div>
+                    <h3>BeaconGH Counseling Services</h3>
+                    <p>Trauma-informed therapy and mental health support. <strong>78% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Individual therapy</span>
+                        <span class="feature-tag">✓ Group counseling</span>
+                        <span class="feature-tag">✓ Family therapy</span>
+                        <span class="feature-tag">📧 Jobs Available</span>
+                    </div>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">💼</div>
-                    <h3>Job Training</h3>
-                    <p>Vocational skills development, computer literacy, and entrepreneurship programs for economic empowerment.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">🎓</div>
-                    <h3>Education Support</h3>
-                    <p>Educational opportunities, literacy programs, and academic support for survivors and their children.</p>
+                    <div class="service-icon">👥</div>
+                    <h3>BeaconGH Support Groups</h3>
+                    <p>Peer support and community healing circles. <strong>95% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Survivor support circles</span>
+                        <span class="feature-tag">✓ Peer mentoring</span>
+                        <span class="feature-tag">💼 Volunteer opportunities</span>
+                    </div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🏥</div>
-                    <h3>Healthcare Access</h3>
-                    <p>Medical care coordination, health education, and connections to healthcare providers and specialists.</p>
+                    <h3>BeaconGH Healthcare Support</h3>
+                    <p>Medical care coordination and health advocacy. <strong>88% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Medical referrals</span>
+                        <span class="feature-tag">✓ Health insurance assistance</span>
+                        <span class="feature-tag">💼 Employment opportunities</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>BeaconGH Job Training</h3>
+                    <p>Vocational skills and employment preparation. <strong>92% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Vocational training</span>
+                        <span class="feature-tag">✓ Computer literacy</span>
+                        <span class="feature-tag">💼 Training positions available</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3>BeaconGH Education Assistance</h3>
+                    <p>Educational support and literacy programs. <strong>90% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Adult literacy</span>
+                        <span class="feature-tag">✓ Scholarship assistance</span>
+                        <span class="feature-tag">💼 Education coordinator roles</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💰</div>
+                    <h3>BeaconGH Financial Options</h3>
+                    <p>Financial literacy and emergency assistance. <strong>85% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Emergency financial aid</span>
+                        <span class="feature-tag">✓ Financial literacy training</span>
+                        <span class="feature-tag">💼 Remote advisor positions</span>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🍽️</div>
+                    <h3>BeaconGH Basic Needs</h3>
+                    <p>Emergency food, clothing, and essential supplies. <strong>95% capacity available</strong></p>
+                    <div class="service-features">
+                        <span class="feature-tag">✓ Food pantry</span>
+                        <span class="feature-tag">✓ Clothing bank</span>
+                        <span class="feature-tag">💼 Distribution coordinator roles</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- New Features Section -->
+            <div style="margin-top: 4rem; text-align: center;">
+                <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                    <h3 style="color: #2E8B57; margin-bottom: 1rem;">🚀 New App Features</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto;">
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔐</div>
+                            <h4>Enhanced Login System</h4>
+                            <p>Multiple access options including anonymous and emergency access for complete privacy and safety.</p>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
+                            <h4>Job Opportunities Hub</h4>
+                            <p>Find volunteer and employment opportunities across all BeaconGH divisions with AI-powered matching.</p>
+                        </div>
+                        <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💝</div>
+                            <h4>Targeted Donations</h4>
+                            <p>Support specific programs with secure, flexible donation options for maximum impact.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #2E8B57, #3CB371); color: white; padding: 2rem; border-radius: 15px;">
+                    <h3 style="margin-bottom: 1rem;">📱 Download Our Updated App</h3>
+                    <p style="margin-bottom: 1.5rem;">Experience our new AI-powered features and comprehensive service divisions</p>
+                    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <a href="#" style="background: white; color: #2E8B57; padding: 0.75rem 1.5rem; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            📱 Google Play Store
+                        </a>
+                        <a href="#" style="background: white; color: #2E8B57; padding: 0.75rem 1.5rem; border-radius: 25px; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            🍎 App Store
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

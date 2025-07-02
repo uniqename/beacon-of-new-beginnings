@@ -5,6 +5,7 @@ import '../emergency/emergency_screen.dart';
 import '../resources/resources_screen.dart';
 import '../community/community_screen.dart';
 import '../profile/profile_screen.dart';
+import '../services/service_divisions_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -217,11 +218,14 @@ class HomeTabScreen extends StatelessWidget {
                 children: [
                   _QuickAccessCard(
                     icon: Icons.home_outlined,
-                    title: 'Shelter',
-                    subtitle: 'Find safe accommodation',
+                    title: 'BeaconGH Services',
+                    subtitle: 'AI-powered resource matching',
                     color: Colors.blue,
                     onTap: () {
-                      // Navigate to shelter resources
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                      );
                     },
                   ),
                   _QuickAccessCard(
@@ -230,7 +234,10 @@ class HomeTabScreen extends StatelessWidget {
                     subtitle: 'Talk to professionals',
                     color: Colors.purple,
                     onTap: () {
-                      // Navigate to counseling resources
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                      );
                     },
                   ),
                   _QuickAccessCard(
@@ -239,7 +246,10 @@ class HomeTabScreen extends StatelessWidget {
                     subtitle: 'Get legal support',
                     color: Colors.indigo,
                     onTap: () {
-                      // Navigate to legal resources
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                      );
                     },
                   ),
                   _QuickAccessCard(
@@ -248,7 +258,10 @@ class HomeTabScreen extends StatelessWidget {
                     subtitle: 'Healthcare services',
                     color: Colors.green,
                     onTap: () {
-                      // Navigate to medical resources
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                      );
                     },
                   ),
                 ],
