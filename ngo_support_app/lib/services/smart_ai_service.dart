@@ -57,413 +57,244 @@ class SmartAIService {
         id: 'beacon_shelter',
         name: 'BeaconGH Shelter Services',
         shortName: 'BeaconGH Shelter',
-        description: 'Safe, secure emergency and transitional housing with 24/7 support staff',
+        description: 'Planning comprehensive emergency and transitional housing programs',
         icon: '🏠',
         color: '#2E8B57',
         services: [
-          'Emergency shelter placement',
-          'Transitional housing',
-          'Safety planning',
-          'Children accommodation',
-          '24/7 security'
+          'Emergency shelter placement (Coming Soon)',
+          'Transitional housing (In Development)',
+          'Safety planning (Available)',
+          'Children accommodation (Planning)',
+          '24/7 security (Future)'
         ],
         resources: [
-          'Immediate bed availability',
-          'Crisis intervention',
-          'Case management',
-          'Support groups'
+          'Crisis intervention (Available)',
+          'Case management (Coming Soon)',
+          'Support groups (Planning)',
+          'Community partnerships (Building)'
         ],
-        isAvailable: true,
-        capacity: 85,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'shelter@beacongh.org',
         contactPhone: '+233501234567',
         donationUrl: 'https://beaconnewbeginnings.org/donate/shelter',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'shelter_coord_001',
-            title: 'Shelter Coordinator',
-            type: 'full-time',
-            description: 'Manage daily shelter operations and client intake',
-            requirements: [
-              'Bachelor\'s degree in Social Work',
-              'Experience with trauma survivors',
-              'Crisis intervention training'
-            ],
-            location: 'Accra, Ghana',
-            isRemote: false,
-            applicationEmail: 'jobs.shelter@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 3)),
-            isUrgent: true,
-          ),
-          JobOpportunity(
-            id: 'shelter_vol_001',
-            title: 'Overnight Volunteer',
-            type: 'volunteer',
-            description: 'Provide overnight support and safety monitoring',
-            requirements: [
-              'Background check required',
-              'Trauma-informed care training',
-              'Commitment to 2 nights per month'
-            ],
-            location: 'Multiple locations in Accra',
-            isRemote: false,
-            applicationEmail: 'volunteer.shelter@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 1)),
-            isUrgent: false,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_legal',
         name: 'BeaconGH Legal Assistance',
         shortName: 'BeaconGH Legal',
-        description: 'Comprehensive legal advocacy and representation for survivors',
+        description: 'Building legal advocacy network and partnerships for survivors',
         icon: '⚖️',
         color: '#1B5E42',
         services: [
-          'Legal representation',
-          'Court accompaniment',
-          'Protective orders',
-          'Family law assistance',
-          'Immigration support'
+          'Legal representation (Building Network)',
+          'Court accompaniment (Future)',
+          'Protective orders (Planning)',
+          'Family law assistance (Coming Soon)',
+          'Immigration support (Future)'
         ],
         resources: [
-          'Pro bono lawyers',
-          'Legal aid application',
-          'Court documentation',
-          'Rights education'
+          'Pro bono lawyers (Recruiting)',
+          'Legal aid application (Available)',
+          'Court documentation (Future)',
+          'Rights education (Planning)'
         ],
-        isAvailable: true,
-        capacity: 92,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'legal@beacongh.org',
         contactPhone: '+233501234568',
         donationUrl: 'https://beaconnewbeginnings.org/donate/legal',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'legal_adv_001',
-            title: 'Legal Advocate',
-            type: 'part-time',
-            description: 'Provide legal advocacy and court support for survivors',
-            requirements: [
-              'Law degree or paralegal certification',
-              'Experience with domestic violence cases',
-              'Fluency in English and local languages'
-            ],
-            location: 'Accra and Kumasi',
-            isRemote: false,
-            applicationEmail: 'jobs.legal@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 5)),
-            isUrgent: true,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_counseling',
         name: 'BeaconGH Counseling Services',
         shortName: 'BeaconGH Counseling',
-        description: 'Trauma-informed therapy and mental health support',
+        description: 'Developing trauma-informed therapy and mental health programs',
         icon: '💬',
         color: '#4CAF50',
         services: [
-          'Individual therapy',
-          'Group counseling',
-          'Family therapy',
-          'Trauma counseling',
-          'Crisis intervention'
+          'Individual therapy (Coming Soon)',
+          'Group counseling (Planning)',
+          'Family therapy (Future)',
+          'Trauma counseling (In Development)',
+          'Crisis intervention (Available)'
         ],
         resources: [
-          'Licensed therapists',
-          'Support groups',
-          'Mental health workshops',
-          'Peer counseling'
+          'Licensed therapists (Recruiting)',
+          'Support groups (Planning)',
+          'Mental health workshops (Future)',
+          'Peer counseling (Coming Soon)'
         ],
-        isAvailable: true,
-        capacity: 78,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'counseling@beacongh.org',
         contactPhone: '+233501234569',
         donationUrl: 'https://beaconnewbeginnings.org/donate/counseling',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'counselor_001',
-            title: 'Licensed Clinical Counselor',
-            type: 'full-time',
-            description: 'Provide trauma-informed therapy for abuse survivors',
-            requirements: [
-              'Master\'s in Clinical Psychology',
-              'Licensed counselor in Ghana',
-              'Trauma therapy certification'
-            ],
-            location: 'Accra',
-            isRemote: false,
-            applicationEmail: 'jobs.counseling@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 7)),
-            isUrgent: true,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_groups',
         name: 'BeaconGH Support Groups',
         shortName: 'BeaconGH Groups',
-        description: 'Peer support and community healing circles',
+        description: 'Creating peer support networks and community healing initiatives',
         icon: '👥',
         color: '#FFA726',
         services: [
-          'Survivor support circles',
-          'Peer mentoring',
-          'Skills workshops',
-          'Community events',
-          'Healing retreats'
+          'Survivor support circles (Planning)',
+          'Peer mentoring (Coming Soon)',
+          'Skills workshops (Future)',
+          'Community events (Planning)',
+          'Healing retreats (Future)'
         ],
         resources: [
-          'Weekly group meetings',
-          'Peer support network',
-          'Online forums',
-          'Resource sharing'
+          'Weekly group meetings (Planning)',
+          'Peer support network (Building)',
+          'Online forums (Future)',
+          'Resource sharing (Coming Soon)'
         ],
-        isAvailable: true,
-        capacity: 95,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'groups@beacongh.org',
         contactPhone: '+233501234570',
         donationUrl: 'https://beaconnewbeginnings.org/donate/groups',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'group_facil_001',
-            title: 'Support Group Facilitator',
-            type: 'part-time',
-            description: 'Lead peer support groups and healing circles',
-            requirements: [
-              'Group facilitation experience',
-              'Trauma-informed care training',
-              'Strong communication skills'
-            ],
-            location: 'Various locations in Greater Accra',
-            isRemote: false,
-            applicationEmail: 'jobs.groups@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 2)),
-            isUrgent: false,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_healthcare',
         name: 'BeaconGH Healthcare Support',
         shortName: 'BeaconGH Healthcare',
-        description: 'Medical care coordination and health advocacy',
+        description: 'Establishing medical care coordination and health advocacy programs',
         icon: '🏥',
         color: '#64B5F6',
         services: [
-          'Medical referrals',
-          'Health insurance assistance',
-          'Mental health medication',
-          'Emergency medical care',
-          'Health education'
+          'Medical referrals (Building Network)',
+          'Health insurance assistance (Coming Soon)',
+          'Mental health medication (Future)',
+          'Emergency medical care (Planning)',
+          'Health education (Coming Soon)'
         ],
         resources: [
-          'Partner clinics',
-          'Mobile health units',
-          'Prescription assistance',
-          'Health screenings'
+          'Partner clinics (Developing)',
+          'Mobile health units (Future)',
+          'Prescription assistance (Planning)',
+          'Health screenings (Coming Soon)'
         ],
-        isAvailable: true,
-        capacity: 88,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'healthcare@beacongh.org',
         contactPhone: '+233501234571',
         donationUrl: 'https://beaconnewbeginnings.org/donate/healthcare',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'health_coord_001',
-            title: 'Health Services Coordinator',
-            type: 'full-time',
-            description: 'Coordinate medical services and health advocacy',
-            requirements: [
-              'Public health or nursing background',
-              'Healthcare system knowledge',
-              'Case management experience'
-            ],
-            location: 'Accra',
-            isRemote: false,
-            applicationEmail: 'jobs.healthcare@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 4)),
-            isUrgent: false,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_job_training',
         name: 'BeaconGH Job Training',
         shortName: 'BeaconGH Training',
-        description: 'Vocational skills and employment preparation',
+        description: 'Launching vocational skills and employment preparation programs',
         icon: '💼',
         color: '#9C27B0',
         services: [
-          'Vocational training',
-          'Computer literacy',
-          'Job placement',
-          'Resume building',
-          'Interview preparation'
+          'Vocational training (Planning)',
+          'Computer literacy (Coming Soon)',
+          'Job placement (Future)',
+          'Resume building (Planning)',
+          'Interview preparation (Coming Soon)'
         ],
         resources: [
-          'Training workshops',
-          'Employer partnerships',
-          'Equipment lending',
-          'Certification programs'
+          'Training workshops (Developing)',
+          'Employer partnerships (Building)',
+          'Equipment lending (Future)',
+          'Certification programs (Planning)'
         ],
-        isAvailable: true,
-        capacity: 92,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'training@beacongh.org',
         contactPhone: '+233501234572',
         donationUrl: 'https://beaconnewbeginnings.org/donate/training',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'job_trainer_001',
-            title: 'Vocational Skills Trainer',
-            type: 'part-time',
-            description: 'Teach vocational skills and job readiness',
-            requirements: [
-              'Trade certification or degree',
-              'Teaching or training experience',
-              'Passion for empowerment'
-            ],
-            location: 'Training centers in Accra',
-            isRemote: false,
-            applicationEmail: 'jobs.training@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 6)),
-            isUrgent: false,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_education',
         name: 'BeaconGH Education Assistance',
         shortName: 'BeaconGH Education',
-        description: 'Educational support and literacy programs',
+        description: 'Developing educational support and literacy programs for survivors and families',
         icon: '🎓',
         color: '#FF6B35',
         services: [
-          'Adult literacy',
-          'GED preparation',
-          'Scholarship assistance',
-          'Children\'s tutoring',
-          'Educational counseling'
+          'Adult literacy (Planning)',
+          'GED preparation (Coming Soon)',
+          'Scholarship assistance (Future)',
+          'Children\'s tutoring (Planning)',
+          'Educational counseling (Coming Soon)'
         ],
         resources: [
-          'Literacy classes',
-          'Educational materials',
-          'Tutoring services',
-          'Scholarship fund'
+          'Literacy classes (Developing)',
+          'Educational materials (Planning)',
+          'Tutoring services (Future)',
+          'Scholarship fund (Building)'
         ],
-        isAvailable: true,
-        capacity: 90,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'education@beacongh.org',
         contactPhone: '+233501234573',
         donationUrl: 'https://beaconnewbeginnings.org/donate/education',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'edu_coord_001',
-            title: 'Education Coordinator',
-            type: 'full-time',
-            description: 'Manage educational programs and partnerships',
-            requirements: [
-              'Education or social work degree',
-              'Program management experience',
-              'Knowledge of Ghana education system'
-            ],
-            location: 'Accra',
-            isRemote: false,
-            applicationEmail: 'jobs.education@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 8)),
-            isUrgent: false,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_financial',
         name: 'BeaconGH Financial Options',
         shortName: 'BeaconGH Financial',
-        description: 'Financial literacy and emergency assistance',
+        description: 'Creating financial literacy programs and emergency assistance funds',
         icon: '💰',
         color: '#388E3C',
         services: [
-          'Emergency financial aid',
-          'Financial literacy training',
-          'Micro-loans',
-          'Savings programs',
-          'Budget counseling'
+          'Emergency financial aid (Planning)',
+          'Financial literacy training (Coming Soon)',
+          'Micro-loans (Future)',
+          'Savings programs (Planning)',
+          'Budget counseling (Coming Soon)'
         ],
         resources: [
-          'Emergency fund',
-          'Financial workshops',
-          'Banking partnerships',
-          'Credit building'
+          'Emergency fund (Building)',
+          'Financial workshops (Planning)',
+          'Banking partnerships (Developing)',
+          'Credit building (Future)'
         ],
-        isAvailable: true,
-        capacity: 85,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'financial@beacongh.org',
         contactPhone: '+233501234574',
         donationUrl: 'https://beaconnewbeginnings.org/donate/financial',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'fin_advisor_001',
-            title: 'Financial Literacy Advisor',
-            type: 'part-time',
-            description: 'Provide financial education and counseling',
-            requirements: [
-              'Finance or economics background',
-              'Experience with financial counseling',
-              'Knowledge of Ghana banking system'
-            ],
-            location: 'Accra and Tema',
-            isRemote: true,
-            applicationEmail: 'jobs.financial@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 3)),
-            isUrgent: false,
-          ),
-        ],
+        jobOpenings: [],
       ),
       BeaconDivision(
         id: 'beacon_basic_needs',
         name: 'BeaconGH Food & Clothing Assistance',
         shortName: 'BeaconGH Basic Needs',
-        description: 'Emergency food, clothing, and essential supplies',
+        description: 'Establishing emergency food, clothing, and essential supplies distribution',
         icon: '🍽️',
         color: '#D32F2F',
         services: [
-          'Food pantry',
-          'Clothing bank',
-          'Emergency supplies',
-          'Meal programs',
-          'Hygiene kits'
+          'Food pantry (Planning)',
+          'Clothing bank (Coming Soon)',
+          'Emergency supplies (Planning)',
+          'Meal programs (Future)',
+          'Hygiene kits (Coming Soon)'
         ],
         resources: [
-          'Food distribution',
-          'Clothing donations',
-          'Emergency supplies',
-          'Mobile food truck'
+          'Food distribution (Planning)',
+          'Clothing donations (Building)',
+          'Emergency supplies (Coming Soon)',
+          'Mobile food truck (Future)'
         ],
-        isAvailable: true,
-        capacity: 95,
+        isAvailable: false,
+        capacity: 0,
         contactEmail: 'basicneeds@beacongh.org',
         contactPhone: '+233501234575',
         donationUrl: 'https://beaconnewbeginnings.org/donate/basicneeds',
-        jobOpenings: [
-          JobOpportunity(
-            id: 'dist_coord_001',
-            title: 'Distribution Coordinator',
-            type: 'part-time',
-            description: 'Coordinate food and clothing distribution',
-            requirements: [
-              'Logistics or supply chain experience',
-              'Community outreach skills',
-              'Physical ability to handle donations'
-            ],
-            location: 'Distribution centers in Greater Accra',
-            isRemote: false,
-            applicationEmail: 'jobs.basicneeds@beacongh.org',
-            postedDate: DateTime.now().subtract(Duration(days: 1)),
-            isUrgent: true,
-          ),
-        ],
+        jobOpenings: [],
       ),
     ];
   }
@@ -557,69 +388,13 @@ class SmartAIService {
     return divisions;
   }
 
-  // AI-powered job matching
+  // AI-powered job matching (currently returns empty since no jobs are posted yet)
   static List<JobOpportunity> getRelevantJobs({
     required String userSkills,
     required String location,
     String? availability,
   }) {
-    List<JobOpportunity> allJobs = [];
-    
-    // Collect all jobs from all divisions
-    for (BeaconDivision division in _getAllBeaconDivisions()) {
-      allJobs.addAll(division.jobOpenings);
-    }
-    
-    // AI Logic: Match jobs based on user profile
-    allJobs.sort((a, b) {
-      int scoreA = _calculateJobMatchScore(a, userSkills, location, availability);
-      int scoreB = _calculateJobMatchScore(b, userSkills, location, availability);
-      return scoreB.compareTo(scoreA); // Higher score first
-    });
-    
-    return allJobs;
-  }
-
-  static int _calculateJobMatchScore(JobOpportunity job, String userSkills, String location, String? availability) {
-    int score = 0;
-    
-    // Location matching
-    if (job.location.toLowerCase().contains(location.toLowerCase()) || job.isRemote) {
-      score += 30;
-    }
-    
-    // Skills matching (basic keyword matching)
-    List<String> userSkillsList = userSkills.toLowerCase().split(',');
-    for (String skill in userSkillsList) {
-      if (job.description.toLowerCase().contains(skill.trim()) ||
-          job.requirements.any((req) => req.toLowerCase().contains(skill.trim()))) {
-        score += 20;
-      }
-    }
-    
-    // Availability matching
-    if (availability != null) {
-      if (availability.toLowerCase().contains('volunteer') && job.type == 'volunteer') {
-        score += 25;
-      }
-      if (availability.toLowerCase().contains('full') && job.type == 'full-time') {
-        score += 25;
-      }
-      if (availability.toLowerCase().contains('part') && job.type == 'part-time') {
-        score += 25;
-      }
-    }
-    
-    // Urgency bonus
-    if (job.isUrgent) {
-      score += 15;
-    }
-    
-    // Recent posting bonus
-    if (job.postedDate.isAfter(DateTime.now().subtract(Duration(days: 7)))) {
-      score += 10;
-    }
-    
-    return score;
+    // Return empty list since we're just starting and don't have active job postings yet
+    return [];
   }
 }
