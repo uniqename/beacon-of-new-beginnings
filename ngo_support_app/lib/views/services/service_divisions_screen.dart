@@ -21,13 +21,11 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
   }
 
   void _loadDivisions() {
-    print('Loading divisions with helpType: $_selectedHelpType, urgency: $_selectedUrgency');
     final divisions = SmartAIService.smartResourceRouting(
       helpType: _selectedHelpType,
       urgency: _selectedUrgency,
       location: 'Accra',
     );
-    print('Loaded ${divisions.length} divisions');
     setState(() {
       _divisions = divisions;
       _isLoading = false;
