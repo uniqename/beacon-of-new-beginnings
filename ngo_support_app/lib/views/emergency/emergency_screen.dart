@@ -80,7 +80,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
     if (currentUser != null) {
       final emergencyService = EmergencyService();
       final success = await emergencyService.sendEmergencyAlert(
-        userId: currentUser.uid,
+        userId: currentUser.id,
         location: _currentPosition!,
         message: 'Emergency alert triggered from Beacon of New Beginnings app',
       );

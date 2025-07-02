@@ -109,7 +109,7 @@ class HomeTabScreen extends StatelessWidget {
                       
                       // Registered user - fetch and display name
                       return FutureBuilder(
-                        future: authService.getUserData(currentUser.uid),
+                        future: authService.getUserData(currentUser.id),
                         builder: (context, snapshot) {
                           final user = snapshot.data;
                           final displayName = user?.displayName ?? currentUser.displayName ?? 'Friend';

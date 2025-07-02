@@ -1,76 +1,126 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
+import 'dart:async';
 import '../models/user.dart';
-import 'demo_auth_service.dart';
 
 class AuthService {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
   AuthService._internal();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final DemoAuthService _demoAuth = DemoAuthService();
-  
-  bool _useDemo = false;
+  Database? _database;
+  AppUser? _currentUser;
+  final StreamController<AppUser?> _authStateController = StreamController<AppUser?>.broadcast();
 
-  User? get currentUser => _auth.currentUser;
+  AppUser? get currentUser => _currentUser;
   
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  Stream<AppUser?> get authStateChanges => _authStateController.stream;
   
-  // Check if Firebase is available
-  Future<bool> _checkFirebaseAvailability() async {
-    try {
-      await _auth.currentUser; // Simple check
-      return true;
-    } catch (e) {
-      print('Firebase not available, switching to demo mode: $e');
-      _useDemo = true;
-      return false;
-    }
+  // Initialize local database
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'ngo_support.db');
+    
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE users(
+            id TEXT PRIMARY KEY,
+            email TEXT,
+            password_hash TEXT,
+            display_name TEXT,
+            phone_number TEXT,
+            user_type TEXT,
+            is_anonymous INTEGER,
+            created_at TEXT,
+            last_login_at TEXT,
+            emergency_contact TEXT,
+            emergency_contact_phone TEXT,
+            support_needs TEXT,
+            current_location TEXT,
+            has_active_cases INTEGER,
+            specialization TEXT,
+            qualifications TEXT,
+            is_available INTEGER
+          )
+        ''');
+        
+        await db.execute('''
+          CREATE TABLE cases(
+            id TEXT PRIMARY KEY,
+            survivor_id TEXT,
+            type TEXT,
+            priority TEXT,
+            status TEXT,
+            title TEXT,
+            description TEXT,
+            created_at TEXT,
+            is_anonymous INTEGER,
+            contact_info TEXT,
+            latitude REAL,
+            longitude REAL,
+            assigned_counselor_id TEXT,
+            assigned_at TEXT,
+            notes TEXT,
+            attachments TEXT
+          )
+        ''');
+        
+        await db.execute('''
+          CREATE TABLE emergency_alerts(
+            id TEXT PRIMARY KEY,
+            user_id TEXT,
+            latitude REAL,
+            longitude REAL,
+            accuracy REAL,
+            timestamp TEXT,
+            message TEXT,
+            status TEXT,
+            type TEXT
+          )
+        ''');
+      },
+    );
   }
 
   // Anonymous sign in for survivors who want privacy
   Future<AppUser?> signInAnonymously() async {
-    // Check if Firebase is available first
-    if (!await _checkFirebaseAvailability() || _useDemo) {
-      print('Using demo authentication for anonymous sign in');
-      return await _demoAuth.signInAnonymously();
-    }
-    
     try {
-      print('Attempting Firebase anonymous sign in...');
-      final UserCredential result = await _auth.signInAnonymously();
-      final User? user = result.user;
+      print('Creating anonymous user...');
+      final userId = 'anonymous_${DateTime.now().millisecondsSinceEpoch}';
       
-      if (user != null) {
-        print('Anonymous sign in successful: ${user.uid}');
-        final appUser = AppUser(
-          id: user.uid,
-          email: 'anonymous@survivor.local',
-          displayName: 'Anonymous Survivor',
-          userType: UserType.survivor,
-          isAnonymous: true,
-          createdAt: DateTime.now(),
-        );
-        
-        try {
-          await _createUserDocument(appUser);
-          print('User document created successfully');
-        } catch (firestoreError) {
-          print('Firestore error (continuing anyway): $firestoreError');
-          // Continue even if Firestore fails, for demo purposes
-        }
-        
-        await _saveAnonymousStatus(true);
-        return appUser;
-      }
-      return null;
+      final appUser = AppUser(
+        id: userId,
+        email: 'anonymous@survivor.local',
+        displayName: 'Anonymous Survivor',
+        userType: UserType.survivor,
+        isAnonymous: true,
+        createdAt: DateTime.now(),
+      );
+      
+      final db = await database;
+      await db.insert('users', appUser.toMap());
+      
+      _currentUser = appUser;
+      _authStateController.add(_currentUser);
+      await _saveAnonymousStatus(true);
+      
+      print('Anonymous sign in successful: ${appUser.id}');
+      return appUser;
     } catch (e) {
-      print('Firebase anonymous sign in failed, falling back to demo: $e');
-      _useDemo = true;
-      return await _demoAuth.signInAnonymously();
+      print('Error signing in anonymously: $e');
+      return null;
     }
   }
 
@@ -84,64 +134,53 @@ class AuthService {
     String? emergencyContact,
     String? emergencyContactPhone,
   }) async {
-    // Check if Firebase is available first
-    if (!await _checkFirebaseAvailability() || _useDemo) {
-      print('Using demo authentication for registration');
-      return await _demoAuth.registerWithEmailAndPassword(
-        email: email,
-        password: password,
-        displayName: displayName,
-        userType: userType,
-        phoneNumber: phoneNumber,
-        emergencyContact: emergencyContact,
-        emergencyContactPhone: emergencyContactPhone,
-      );
-    }
-    
     try {
-      final UserCredential result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+      // Check if user already exists
+      final db = await database;
+      final existingUsers = await db.query(
+        'users',
+        where: 'email = ?',
+        whereArgs: [email],
       );
       
-      final User? user = result.user;
-      if (user != null) {
-        await user.updateDisplayName(displayName);
-        
-        final appUser = AppUser(
-          id: user.uid,
-          email: email,
-          displayName: displayName,
-          phoneNumber: phoneNumber,
-          userType: userType,
-          isAnonymous: false,
-          createdAt: DateTime.now(),
-          emergencyContact: emergencyContact,
-          emergencyContactPhone: emergencyContactPhone,
-        );
-        
-        try {
-          await _createUserDocument(appUser);
-        } catch (firestoreError) {
-          print('Firestore error (continuing anyway): $firestoreError');
-        }
-        
-        await _saveAnonymousStatus(false);
-        return appUser;
+      if (existingUsers.isNotEmpty) {
+        throw Exception('User with this email already exists');
       }
-      return null;
-    } catch (e) {
-      print('Firebase registration failed, falling back to demo: $e');
-      _useDemo = true;
-      return await _demoAuth.registerWithEmailAndPassword(
+      
+      // Validate password
+      if (password.length < 6) {
+        throw Exception('Password must be at least 6 characters');
+      }
+      
+      final userId = 'user_${DateTime.now().millisecondsSinceEpoch}';
+      final passwordHash = _hashPassword(password);
+      
+      final appUser = AppUser(
+        id: userId,
         email: email,
-        password: password,
         displayName: displayName,
-        userType: userType,
         phoneNumber: phoneNumber,
+        userType: userType,
+        isAnonymous: false,
+        createdAt: DateTime.now(),
         emergencyContact: emergencyContact,
         emergencyContactPhone: emergencyContactPhone,
       );
+      
+      final userData = appUser.toMap();
+      userData['password_hash'] = passwordHash;
+      
+      await db.insert('users', userData);
+      
+      _currentUser = appUser;
+      _authStateController.add(_currentUser);
+      await _saveAnonymousStatus(false);
+      
+      print('Registration successful for $email');
+      return appUser;
+    } catch (e) {
+      print('Error registering user: $e');
+      return null;
     }
   }
 
@@ -151,35 +190,47 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final UserCredential result = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+      final db = await database;
+      final passwordHash = _hashPassword(password);
+      
+      final users = await db.query(
+        'users',
+        where: 'email = ? AND password_hash = ?',
+        whereArgs: [email, passwordHash],
       );
       
-      final User? user = result.user;
-      if (user != null) {
-        await _updateLastLogin(user.uid);
-        final appUser = await getUserData(user.uid);
-        await _saveAnonymousStatus(appUser?.isAnonymous ?? false);
-        return appUser;
+      if (users.isEmpty) {
+        throw Exception('Invalid email or password');
       }
-      return null;
+      
+      final userData = users.first;
+      await _updateLastLogin(userData['id'] as String);
+      
+      final appUser = AppUser.fromMap(userData);
+      _currentUser = appUser;
+      _authStateController.add(_currentUser);
+      await _saveAnonymousStatus(appUser.isAnonymous);
+      
+      print('Sign in successful for $email');
+      return appUser;
     } catch (e) {
       print('Error signing in: $e');
       return null;
     }
   }
 
-  // Get user data from Firestore
+  // Get user data from local database
   Future<AppUser?> getUserData(String uid) async {
     try {
-      final DocumentSnapshot doc = await _firestore
-          .collection('users')
-          .doc(uid)
-          .get();
+      final db = await database;
+      final users = await db.query(
+        'users',
+        where: 'id = ?',
+        whereArgs: [uid],
+      );
       
-      if (doc.exists) {
-        return AppUser.fromFirestore(doc);
+      if (users.isNotEmpty) {
+        return AppUser.fromMap(users.first);
       }
       return null;
     } catch (e) {
@@ -191,10 +242,19 @@ class AuthService {
   // Update user data
   Future<bool> updateUserData(AppUser user) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(user.id)
-          .update(user.toFirestore());
+      final db = await database;
+      await db.update(
+        'users',
+        user.toMap(),
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+      
+      if (_currentUser?.id == user.id) {
+        _currentUser = user;
+        _authStateController.add(_currentUser);
+      }
+      
       return true;
     } catch (e) {
       print('Error updating user data: $e');
@@ -205,17 +265,32 @@ class AuthService {
   // Sign out
   Future<void> signOut() async {
     try {
+      _currentUser = null;
+      _authStateController.add(null);
       await _clearAnonymousStatus();
-      await _auth.signOut();
+      print('Sign out successful');
     } catch (e) {
       print('Error signing out: $e');
     }
   }
 
-  // Password reset
+  // Password reset (simplified for local storage)
   Future<bool> resetPassword(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(email: email);
+      final db = await database;
+      final users = await db.query(
+        'users',
+        where: 'email = ?',
+        whereArgs: [email],
+      );
+      
+      if (users.isEmpty) {
+        throw Exception('No user found with this email');
+      }
+      
+      // In a real app, you would send an email here
+      // For now, we'll just simulate a successful reset
+      print('Password reset instructions would be sent to $email');
       return true;
     } catch (e) {
       print('Error sending password reset email: $e');
@@ -226,24 +301,35 @@ class AuthService {
   // Delete account (for anonymous users)
   Future<bool> deleteAccount() async {
     try {
-      final User? user = _auth.currentUser;
-      if (user != null) {
-        // Delete user document from Firestore
-        await _firestore.collection('users').doc(user.uid).delete();
+      if (_currentUser != null) {
+        final db = await database;
         
-        // Delete cases associated with this user
-        final casesQuery = await _firestore
-            .collection('cases')
-            .where('survivorId', isEqualTo: user.uid)
-            .get();
+        // Delete user cases
+        await db.delete(
+          'cases',
+          where: 'survivor_id = ?',
+          whereArgs: [_currentUser!.id],
+        );
         
-        for (final doc in casesQuery.docs) {
-          await doc.reference.delete();
-        }
+        // Delete user emergency alerts
+        await db.delete(
+          'emergency_alerts',
+          where: 'user_id = ?',
+          whereArgs: [_currentUser!.id],
+        );
         
-        // Delete Firebase Auth account
-        await user.delete();
+        // Delete user account
+        await db.delete(
+          'users',
+          where: 'id = ?',
+          whereArgs: [_currentUser!.id],
+        );
+        
+        _currentUser = null;
+        _authStateController.add(null);
         await _clearAnonymousStatus();
+        
+        print('Account deleted successfully');
         return true;
       }
       return false;
@@ -260,18 +346,24 @@ class AuthService {
   }
 
   // Private helper methods
-  Future<void> _createUserDocument(AppUser user) async {
-    await _firestore
-        .collection('users')
-        .doc(user.id)
-        .set(user.toFirestore());
+  String _hashPassword(String password) {
+    final bytes = utf8.encode(password + 'ngo_support_salt');
+    final digest = sha256.convert(bytes);
+    return digest.toString();
   }
 
   Future<void> _updateLastLogin(String uid) async {
-    await _firestore
-        .collection('users')
-        .doc(uid)
-        .update({'lastLoginAt': FieldValue.serverTimestamp()});
+    try {
+      final db = await database;
+      await db.update(
+        'users',
+        {'last_login_at': DateTime.now().toIso8601String()},
+        where: 'id = ?',
+        whereArgs: [uid],
+      );
+    } catch (e) {
+      print('Error updating last login: $e');
+    }
   }
 
   Future<void> _saveAnonymousStatus(bool isAnonymous) async {

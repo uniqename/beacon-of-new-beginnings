@@ -52,6 +52,12 @@ class AppUser {
     );
   }
 
+  // For backward compatibility with Firebase references
+  factory AppUser.fromFirestore(dynamic doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    return AppUser.fromMap(data);
+  }
+
   factory AppUser.fromMap(Map<String, dynamic> map) {
     return AppUser(
       id: map['id'] ?? '',
@@ -80,6 +86,11 @@ class AppUser {
           : null,
       isAvailable: map['is_available'] == 1 || map['is_available'] == true,
     );
+  }
+
+  // For backward compatibility with Firebase references
+  Map<String, dynamic> toFirestore() {
+    return toMap();
   }
 
   Map<String, dynamic> toMap() {

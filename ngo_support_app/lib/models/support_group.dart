@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum GroupType { general, survivors, mothers, legal, healing, skills }
 
@@ -37,10 +36,9 @@ class SupportGroup {
     this.tags = const [],
   });
 
-  factory SupportGroup.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory SupportGroup.fromMap(Map<String, dynamic> data) {
     return SupportGroup(
-      id: doc.id,
+      id: data['id'] ?? '',
       name: data['name'] ?? '',
       description: data['description'] ?? '',
       type: GroupType.values.firstWhere(
@@ -58,9 +56,9 @@ class SupportGroup {
       moderatorIds: data['moderatorIds'] != null 
           ? List<String>.from(data['moderatorIds']) 
           : [],
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      createdAt: DateTime.parse(data['createdAt'] ?? DateTime.now().toIso8601String()),
       lastActivityAt: data['lastActivityAt'] != null 
-          ? (data['lastActivityAt'] as Timestamp).toDate() 
+          ? DateTime.parse(data['lastActivityAt']) 
           : null,
       isActive: data['isActive'] ?? true,
       guidelines: data['guidelines'] != null 
@@ -73,8 +71,9 @@ class SupportGroup {
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'description': description,
       'type': type.toString().split('.').last,
@@ -82,10 +81,8 @@ class SupportGroup {
       'facilitatorId': facilitatorId,
       'memberIds': memberIds,
       'moderatorIds': moderatorIds,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'lastActivityAt': lastActivityAt != null 
-          ? Timestamp.fromDate(lastActivityAt!) 
-          : null,
+      'createdAt': createdAt.toIso8601String(),
+      'lastActivityAt': lastActivityAt?.toIso8601String(),
       'isActive': isActive,
       'guidelines': guidelines,
       'maxMembers': maxMembers,
@@ -140,15 +137,14 @@ class GroupMessage {
     this.moderatorNote,
   });
 
-  factory GroupMessage.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory GroupMessage.fromMap(Map<String, dynamic> data) {
     return GroupMessage(
-      id: doc.id,
+      id: data['id'] ?? '',
       groupId: data['groupId'] ?? '',
       senderId: data['senderId'] ?? '',
       senderDisplayName: data['senderDisplayName'],
       content: data['content'] ?? '',
-      sentAt: (data['sentAt'] as Timestamp).toDate(),
+      sentAt: DateTime.parse(data['sentAt'] ?? DateTime.now().toIso8601String()),
       isAnonymous: data['isAnonymous'] ?? false,
       supportedBy: data['supportedBy'] != null 
           ? List<String>.from(data['supportedBy']) 
@@ -158,13 +154,14 @@ class GroupMessage {
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'groupId': groupId,
       'senderId': senderId,
       'senderDisplayName': senderDisplayName,
       'content': content,
-      'sentAt': Timestamp.fromDate(sentAt),
+      'sentAt': sentAt.toIso8601String(),
       'isAnonymous': isAnonymous,
       'supportedBy': supportedBy,
       'isModerated': isModerated,
@@ -198,15 +195,14 @@ class SupportResource {
     this.helpfulVotes = const [],
   });
 
-  factory SupportResource.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory SupportResource.fromMap(Map<String, dynamic> data) {
     return SupportResource(
-      id: doc.id,
+      id: data['id'] ?? '',
       title: data['title'] ?? '',
       content: data['content'] ?? '',
       authorId: data['authorId'] ?? '',
       authorName: data['authorName'],
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      createdAt: DateTime.parse(data['createdAt'] ?? DateTime.now().toIso8601String()),
       tags: data['tags'] != null 
           ? List<String>.from(data['tags']) 
           : [],
@@ -217,13 +213,14 @@ class SupportResource {
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'title': title,
       'content': content,
       'authorId': authorId,
       'authorName': authorName,
-      'createdAt': Timestamp.fromDate(createdAt),
+      'createdAt': createdAt.toIso8601String(),
       'tags': tags,
       'isVerified': isVerified,
       'helpfulVotes': helpfulVotes,

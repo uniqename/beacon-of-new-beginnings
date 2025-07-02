@@ -59,6 +59,13 @@ class Resource {
     this.currentOccupancy = 0,
   });
 
+  // For backward compatibility with Firebase references
+  factory Resource.fromFirestore(dynamic doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    data['id'] = doc.id; // Ensure ID is set from document ID
+    return Resource.fromMap(data);
+  }
+
   factory Resource.fromMap(Map<String, dynamic> data) {
     return Resource(
       id: data['id'] ?? '',
