@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../services/auth_service.dart';
 
 class EnhancedLoginScreen extends StatefulWidget {
   @override
@@ -30,16 +32,29 @@ class _EnhancedLoginScreenState extends State<EnhancedLoginScreen> {
                 child: Column(
                   children: [
                     Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF2E8B57),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      child: Icon(
-                        Icons.security,
-                        size: 40,
-                        color: Colors.white,
+                      width: 100,
+                      height: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF2E8B57),
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: Icon(
+                                Icons.security,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -214,8 +229,12 @@ class _EnhancedLoginScreenState extends State<EnhancedLoginScreen> {
                 width: double.infinity,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/home');
+                  onPressed: () async {
+                    final authService = Provider.of<AuthService>(context, listen: false);
+                    final user = await authService.signInAnonymously();
+                    if (user != null && mounted) {
+                      Navigator.pushReplacementNamed(context, '/home');
+                    }
                   },
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(color: Color(0xFF2E8B57)),
@@ -352,30 +371,46 @@ class _EnhancedLoginScreenState extends State<EnhancedLoginScreen> {
       _isLoading = true;
     });
 
-    // Simulate login process
-    await Future.delayed(Duration(seconds: 2));
-
-    // Simple validation for demo purposes
-    if (_emailController.text == 'user@beacongh.org' && 
-        _passwordController.text == 'beacon123') {
-      // Successful login
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
-      // Show error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Invalid email or password. Try user@beacongh.org / beacon123'),
-          backgroundColor: Colors.red,
-        ),
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final user = await authService.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
       );
+
+      if (user != null && mounted) {
+        // Successful login
+        Navigator.pushReplacementNamed(context, '/home');
+      } else if (mounted) {
+        // Show error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Invalid email or password. Please check your credentials and try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login failed: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
 
-    setState(() {
-      _isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _showForgotPasswordDialog() {
+    final resetEmailController = TextEditingController();
+    
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -383,9 +418,10 @@ class _EnhancedLoginScreenState extends State<EnhancedLoginScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Enter your email address and we\'ll send you a reset link.'),
+            Text('Enter your email address and we\'ll help you reset your password.'),
             SizedBox(height: 16),
             TextField(
+              controller: resetEmailController,
               decoration: InputDecoration(
                 labelText: 'Email Address',
                 border: OutlineInputBorder(),
@@ -399,20 +435,34 @@ class _EnhancedLoginScreenState extends State<EnhancedLoginScreen> {
             child: Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Password reset link sent to your email'),
-                  backgroundColor: Color(0xFF2E8B57),
-                ),
-              );
+            onPressed: () async {
+              if (resetEmailController.text.isNotEmpty) {
+                try {
+                  final authService = Provider.of<AuthService>(context, listen: false);
+                  await authService.resetPassword(resetEmailController.text.trim());
+                  
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Password reset instructions sent to your email'),
+                      backgroundColor: Color(0xFF2E8B57),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Error: ${e.toString()}'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
             },
-            child: Text('Send Reset Link'),
+            child: Text('Send Reset Instructions'),
           ),
         ],
       ),
-    );
+    ).then((_) => resetEmailController.dispose());
   }
 
   @override

@@ -76,6 +76,35 @@ class HomeTabScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Logo header
+              Center(
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFF2E8B57),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Icon(
+                            Icons.home,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              
               // Header with greeting
               Consumer<AuthService>(
                 builder: (context, authService, child) {
