@@ -11,7 +11,7 @@ class ServiceDivisionsScreen extends StatefulWidget {
 class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
   List<BeaconDivision> _divisions = [];
   bool _isLoading = true;
-  String _selectedHelpType = 'general';
+  String _selectedHelpType = 'emergency';
   String _selectedUrgency = 'normal';
 
   @override
@@ -21,12 +21,15 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
   }
 
   void _loadDivisions() {
+    print('Loading divisions with helpType: $_selectedHelpType, urgency: $_selectedUrgency');
+    final divisions = SmartAIService.smartResourceRouting(
+      helpType: _selectedHelpType,
+      urgency: _selectedUrgency,
+      location: 'Accra',
+    );
+    print('Loaded ${divisions.length} divisions');
     setState(() {
-      _divisions = SmartAIService.smartResourceRouting(
-        helpType: _selectedHelpType,
-        urgency: _selectedUrgency,
-        location: 'Accra',
-      );
+      _divisions = divisions;
       _isLoading = false;
     });
   }
@@ -335,9 +338,9 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
                       division.isAvailable ? Icons.check_circle : Icons.access_time,
                     ),
                     SizedBox(width: 12),
-                    _buildCapacityChip(division.capacity),
+                    _buildStartupStatusChip(division),
                     SizedBox(width: 12),
-                    _buildJobsChip(division.jobOpenings.length),
+                    _buildStartupJobsChip(),
                   ],
                 ),
                 SizedBox(height: 12),
@@ -417,8 +420,29 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
     );
   }
 
-  Widget _buildCapacityChip(int capacity) {
-    Color color = capacity > 80 ? Colors.green : capacity > 50 ? Colors.orange : Colors.red;
+  Widget _buildStartupStatusChip(BeaconDivision division) {
+    String status;
+    Color color;
+    IconData icon;
+    
+    if (division.services.any((service) => service.contains('Available'))) {
+      status = 'Available';
+      color = Colors.green;
+      icon = Icons.check_circle;
+    } else if (division.services.any((service) => service.contains('Coming Soon'))) {
+      status = 'Coming Soon';
+      color = Colors.blue;
+      icon = Icons.schedule;
+    } else if (division.services.any((service) => service.contains('Planning'))) {
+      status = 'Planning';
+      color = Colors.orange;
+      icon = Icons.construction;
+    } else {
+      status = 'In Development';
+      color = Colors.purple;
+      icon = Icons.build;
+    }
+    
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -426,18 +450,25 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: color.withOpacity(0.3)),
       ),
-      child: Text(
-        '${capacity}% Capacity',
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
-          color: color,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: color, size: 12),
+          SizedBox(width: 4),
+          Text(
+            status,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: color,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildJobsChip(int jobCount) {
+  Widget _buildStartupJobsChip() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -445,13 +476,20 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.purple.withOpacity(0.3)),
       ),
-      child: Text(
-        '${jobCount} Jobs',
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w600,
-          color: Colors.purple,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.work_outline, color: Colors.purple, size: 12),
+          SizedBox(width: 4),
+          Text(
+            'Hiring Soon',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: Colors.purple,
+            ),
+          ),
+        ],
       ),
     );
   }
