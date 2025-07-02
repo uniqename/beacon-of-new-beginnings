@@ -9,13 +9,13 @@ import 'views/services/service_divisions_screen.dart';
 import 'views/home/home_screen.dart';
 import 'views/emergency/emergency_screen.dart';
 import 'views/auth/register_screen.dart';
+import 'views/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Initialize local database
   await LocalDatabaseService.database;
-  print('Beacon of New Beginnings - Production Ready');
   
   runApp(const NGOSupportApp());
 }
@@ -38,16 +38,15 @@ class NGOSupportApp extends StatelessWidget {
         title: AppBranding.appName,
         debugShowCheckedModeBanner: false,
         theme: AppBranding.lightTheme,
-        initialRoute: '/home',
+        initialRoute: '/',
         routes: {
-          '/': (context) => HomeScreen(),
+          '/': (context) => AuthWrapper(),
           '/login': (context) => EnhancedLoginScreen(),
           '/register': (context) => RegisterScreen(),
           '/home': (context) => HomeScreen(),
           '/services': (context) => ServiceDivisionsScreen(),
           '/emergency': (context) => EmergencyScreen(),
         },
-        home: HomeScreen(),
       ),
     );
   }

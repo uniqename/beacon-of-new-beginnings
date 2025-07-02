@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
 
 class EnhancedLoginScreen extends StatefulWidget {
+  const EnhancedLoginScreen({super.key});
+  
   @override
   _EnhancedLoginScreenState createState() => _EnhancedLoginScreenState();
 }

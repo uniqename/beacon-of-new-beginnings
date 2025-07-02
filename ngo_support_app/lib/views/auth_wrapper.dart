@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 import '../models/user.dart';
-import 'auth/login_screen.dart';
+import 'auth/enhanced_login_screen.dart';
 import 'home/home_screen.dart';
 
 class AuthWrapper extends StatefulWidget {
@@ -34,7 +34,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
           return const HomeScreen();
         }
         
-        return const LoginScreen();
+        return const EnhancedLoginScreen();
       },
     );
   }
