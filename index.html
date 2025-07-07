@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beacon of New Beginnings - Staging Environment</title>
+  <link rel="icon" type="image/png" href="/favicon.png"/>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+  <meta name="theme-color" content="#00796B">
+  <meta name="description" content="Beacon NGO Staging - Test environment for trauma-informed support platform">
+  
+  <!-- Staging Environment Styles -->
+  <style>
+    .staging-banner {
+      background: linear-gradient(45deg, #00796B, #004D40);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .staging-banner .environment-label {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 10px;
+      font-size: 12px;
+    }
+    
+    body {
+      margin: 0;
+      padding-top: 50px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .app-container {
+      margin-top: 10px;
+    }
+    
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      flex-direction: column;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #00796B;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .test-info {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px;
+      font-size: 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .safety-notice {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      color: #856404;
+    }
+    
+    .safety-notice h4 {
+      margin: 0 0 10px 0;
+      color: #856404;
+    }
+    
+    .feature-section {
+      background: #e8f5e8;
+      border: 1px solid #c8e6c9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+    
+    .feature-section h4 {
+      margin: 0 0 10px 0;
+      color: #2e7d32;
+    }
+    
+    .feature-item {
+      margin: 8px 0;
+      padding: 8px;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #4caf50;
+      font-size: 13px;
+    }
+    
+    .emergency-contacts {
+      background: #ffebee;
+      border: 1px solid #ffcdd2;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+    
+    .emergency-contacts h4 {
+      margin: 0 0 10px 0;
+      color: #c62828;
+    }
+    
+    .contact-item {
+      margin: 5px 0;
+      padding: 8px;
+      background: white;
+      border-radius: 4px;
+      font-weight: bold;
+      color: #d32f2f;
+    }
+    
+    .demo-notice {
+      background: #e3f2fd;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Staging Environment Banner -->
+  <div class="staging-banner">
+    <span class="environment-label">STAGING</span>
+    Beacon of New Beginnings - Testing Environment (Demo Mode)
+  </div>
+
+  <!-- Test Information Panel -->
+  <div class="test-info">
+    <h3>🏥 Beacon NGO Staging Environment</h3>
+    <p>This is a testing environment for the Beacon of New Beginnings trauma-informed support platform.</p>
+    
+    <div class="safety-notice">
+      <h4>⚠️ Safety Notice</h4>
+      <p><strong>This is a demo environment.</strong> For real emergencies, please contact official emergency services or crisis hotlines.</p>
+    </div>
+    
+    <div class="demo-notice">
+      <h4>📱 Demo Mode Features</h4>
+      <p>This app runs in offline demo mode with local storage only. All data is stored locally and not shared.</p>
+    </div>
+    
+    <div class="feature-section">
+      <h4>Available Test Features</h4>
+      <div class="feature-item">✅ Anonymous Access (No Login Required)</div>
+      <div class="feature-item">✅ Resource Directory (Shelters, Legal, Medical)</div>
+      <div class="feature-item">✅ Emergency Contacts & Hotlines</div>
+      <div class="feature-item">✅ Safety Planning Tools</div>
+      <div class="feature-item">✅ Support Group Information</div>
+      <div class="feature-item">✅ Crisis Intervention Resources</div>
+      <div class="feature-item">✅ Educational Materials</div>
+      <div class="feature-item">✅ Local Storage (No Cloud Data)</div>
+    </div>
+    
+    <div class="emergency-contacts">
+      <h4>🚨 Ghana Emergency Numbers (Real)</h4>
+      <div class="contact-item">Police: 191</div>
+      <div class="contact-item">Fire Service: 192</div>
+      <div class="contact-item">Ambulance: 193</div>
+      <div class="contact-item">Domestic Violence Hotline: 0800-800-800</div>
+      <div class="contact-item">Crisis Support: +233 50 123 4567</div>
+    </div>
+    
+    <div class="feature-section">
+      <h4>Test Data Available</h4>
+      <div class="feature-item">• Sample shelter locations in Greater Accra</div>
+      <div class="feature-item">• Legal aid contacts and resources</div>
+      <div class="feature-item">• Medical support facilities</div>
+      <div class="feature-item">• Counseling services directory</div>
+      <div class="feature-item">• Educational content on trauma recovery</div>
+      <div class="feature-item">• Safety planning templates</div>
+    </div>
+    
+    <div class="safety-notice">
+      <h4>🔒 Privacy & Security</h4>
+      <p>All test data is stored locally on your device. No personal information is transmitted or stored externally in this demo environment.</p>
+    </div>
+  </div>
+
+  <!-- Flutter App Container -->
+  <div class="app-container">
+    <div id="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading Beacon NGO Staging App...</p>
+    </div>
+  </div>
+
+  <!-- Flutter Web Scripts -->
+  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Staging environment configuration
+    window.stagingConfig = {
+      environment: 'staging',
+      mode: 'demo',
+      storage: 'local',
+      enableDebug: true,
+      features: {
+        anonymousAccess: true,
+        resourceDirectory: true,
+        emergencyContacts: true,
+        safetyPlanning: true,
+        supportGroups: true,
+        offlineMode: true,
+        localStorage: true
+      },
+      emergencyContacts: {
+        police: '191',
+        fire: '192',
+        ambulance: '193',
+        domesticViolence: '0800-800-800',
+        crisisSupport: '+233 50 123 4567'
+      },
+      testResources: {
+        shelters: 'Available (Demo Data)',
+        legal: 'Available (Demo Data)',
+        medical: 'Available (Demo Data)',
+        counseling: 'Available (Demo Data)',
+        education: 'Available (Demo Data)'
+      }
+    };
+    
+    // Hide loading indicator when app loads
+    window.addEventListener('flutter-first-frame', function() {
+      document.getElementById('loading').style.display = 'none';
+    });
+    
+    // Console logging for debugging
+    console.log('Beacon NGO Staging Environment Loaded');
+    console.log('Demo mode with local storage enabled');
+    console.log('Available test features:', window.stagingConfig.features);
+  </script>
+</body>
+</html>
