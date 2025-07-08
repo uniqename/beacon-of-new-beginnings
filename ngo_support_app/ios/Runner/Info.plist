@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>BeaconNewBeginnings</string>
+	<string>Beacon of New Beginnings</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,37 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	
-	<!-- Location permissions for emergency features -->
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Beacon of New Beginnings needs location access to provide emergency assistance and connect you with nearby resources when you need help.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Beacon of New Beginnings needs location access to provide emergency assistance and send your location to emergency contacts when needed.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Beacon of New Beginnings needs background location access to provide emergency assistance even when the app is not actively being used.</string>
-	
-	<!-- Phone permissions for emergency calling -->
-	<key>NSPhoneCallUsageDescription</key>
-	<string>Beacon of New Beginnings needs phone access to connect you directly with emergency services and support hotlines.</string>
-	
-	<!-- Camera permissions for case documentation -->
-	<key>NSCameraUsageDescription</key>
-	<string>Beacon of New Beginnings needs camera access to allow secure documentation of evidence when reporting cases (optional).</string>
-	
-	<!-- Photo library permissions -->
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Beacon of New Beginnings needs photo library access to attach images to case reports (optional).</string>
-	
-	<!-- Microphone permissions for recordings -->
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Beacon of New Beginnings needs microphone access for optional voice recordings in case documentation.</string>
-	
-	<!-- App Store submission requirements -->
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	
-	<!-- Privacy policy URL -->
-	<key>NSAppPrivacyPolicyURL</key>
-	<string>https://beaconnewbeginnings.org/privacy</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Beacon of New Beginnings needs location access to help connect you with nearby emergency services, support resources, and community assistance when you need help.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Beacon of New Beginnings uses your location to provide nearby emergency services, support resources, and community assistance when you need help.</string>
 </dict>
 </plist>

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'services/auth_service.dart';
 import 'services/location_service.dart';
-import 'services/local_database_service.dart';
 import 'constants/app_branding.dart';
 import 'views/auth/enhanced_login_screen.dart';
 import 'views/services/service_divisions_screen.dart';
@@ -11,12 +10,8 @@ import 'views/emergency/emergency_screen.dart';
 import 'views/auth/register_screen.dart';
 import 'views/auth_wrapper.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // Initialize local database
-  await LocalDatabaseService.database;
-  
   runApp(const NGOSupportApp());
 }
 

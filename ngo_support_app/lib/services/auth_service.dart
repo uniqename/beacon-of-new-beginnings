@@ -9,7 +9,30 @@ import '../models/user.dart';
 class AuthService {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
-  AuthService._internal();
+  AuthService._internal() {
+    _initialize();
+  }
+  
+  void _initialize() async {
+    try {
+      // Check for existing session
+      final prefs = await SharedPreferences.getInstance();
+      final savedUserId = prefs.getString('currentUserId');
+      if (savedUserId != null) {
+        _currentUser = AppUser(
+          id: savedUserId,
+          email: prefs.getString('userEmail') ?? '',
+          displayName: prefs.getString('userDisplayName') ?? 'User',
+          userType: UserType.survivor,
+          isAnonymous: false,
+          createdAt: DateTime.now(),
+        );
+      }
+      _authStateController.add(_currentUser);
+    } catch (e) {
+      _authStateController.add(null);
+    }
+  }
 
   Database? _database;
   AppUser? _currentUser;
