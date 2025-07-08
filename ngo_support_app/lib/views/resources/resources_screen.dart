@@ -105,6 +105,23 @@ class _ResourcesScreenState extends State<ResourcesScreen> with TickerProviderSt
     });
   }
 
+  Future<void> _showAllResources() async {
+    setState(() => _isLoading = true);
+    
+    // Get all resources from all types
+    List<Resource> allTypeResources = [];
+    for (var type in _resourceTypes) {
+      final resources = await _resourceService.getResourcesByType(type);
+      allTypeResources.addAll(resources);
+    }
+    
+    setState(() {
+      _allResources = allTypeResources;
+      _filteredResources = allTypeResources;
+      _isLoading = false;
+    });
+  }
+
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
     if (await canLaunchUrl(phoneUri)) {
@@ -142,8 +159,16 @@ class _ResourcesScreenState extends State<ResourcesScreen> with TickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Resources'),
+        title: const Text('Find Resources'),
         automaticallyImplyLeading: false,
+        actions: [
+          // Quick Exit Button
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.red),
+            tooltip: 'Quick Exit',
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(100),
           child: Column(
@@ -172,22 +197,41 @@ class _ResourcesScreenState extends State<ResourcesScreen> with TickerProviderSt
                   ),
                 ),
               ),
-              // Tab bar
-              TabBar(
-                controller: _tabController,
-                isScrollable: true,
-                tabs: _resourceTypes.map((type) {
-                  return Tab(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(_getResourceIcon(type)),
-                        const SizedBox(width: 4),
-                        Text(type.toString().split('.').last.toUpperCase()),
-                      ],
+              // Tab bar with back to all option
+              Row(
+                children: [
+                  Expanded(
+                    child: TabBar(
+                      controller: _tabController,
+                      isScrollable: true,
+                      tabs: _resourceTypes.map((type) {
+                        return Tab(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(_getResourceIcon(type)),
+                              const SizedBox(width: 4),
+                              Text(type.toString().split('.').last.toUpperCase()),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
-                  );
-                }).toList(),
+                  ),
+                  // Back to All button
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: TextButton.icon(
+                      onPressed: () => _showAllResources(),
+                      icon: const Icon(Icons.view_list, size: 16),
+                      label: const Text('All'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.teal,
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -332,20 +376,43 @@ class _ResourceCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: resource.is24Hours ? Colors.green[100] : Colors.blue[100],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    resource.is24Hours ? '24/7' : 'Scheduled',
-                    style: TextStyle(
-                      color: resource.is24Hours ? Colors.green[800] : Colors.blue[800],
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Service Status
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: resource.isAvailable ? Colors.green[100] : Colors.orange[100],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        resource.isAvailable ? '✅ Available' : '🔄 Coming Soon',
+                        style: TextStyle(
+                          color: resource.isAvailable ? Colors.green[800] : Colors.orange[800],
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 4),
+                    // Hours Status
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: resource.is24Hours ? Colors.green[100] : Colors.blue[100],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        resource.is24Hours ? '24/7' : 'Scheduled',
+                        style: TextStyle(
+                          color: resource.is24Hours ? Colors.green[800] : Colors.blue[800],
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -426,15 +493,18 @@ class _ResourceCard extends StatelessWidget {
               const SizedBox(height: 12),
             ],
 
-            // Action buttons
+            // Action buttons - Fixed alignment
             Row(
               children: [
                 if (onCall != null)
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: onCall,
-                      icon: const Icon(Icons.phone),
+                      icon: const Icon(Icons.phone, size: 16),
                       label: const Text('Call'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
                     ),
                   ),
                 if (onCall != null && onEmail != null) const SizedBox(width: 8),
@@ -442,16 +512,22 @@ class _ResourceCard extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: onEmail,
-                      icon: const Icon(Icons.email),
+                      icon: const Icon(Icons.email, size: 16),
                       label: const Text('Email'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
                     ),
                   ),
                 if ((onCall != null || onEmail != null)) const SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: onRequest,
-                    icon: const Icon(Icons.assignment),
+                    icon: const Icon(Icons.assignment, size: 16),
                     label: const Text('Request'),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                    ),
                   ),
                 ),
               ],

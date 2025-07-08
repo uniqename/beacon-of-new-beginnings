@@ -14,6 +14,12 @@ class HomeScreenMinimal extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Beacon of New Beginnings'),
         actions: [
+          // Quick Exit Button (Security Feature)
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.red),
+            tooltip: 'Quick Exit (Triple-tap)',
+            onPressed: () => _handleQuickExit(context),
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
@@ -46,7 +52,7 @@ class HomeScreenMinimal extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hello, Brave Soul',
+                        'Welcome',
                         style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -100,27 +106,28 @@ class HomeScreenMinimal extends StatelessWidget {
                   Icons.emergency,
                   Colors.red,
                   () => _showEmergencyDialog(context),
+                  isEmergency: true,
                 ),
                 _buildActionCard(
                   context,
-                  'Resources',
-                  Icons.library_books,
+                  'Find Resources',
+                  Icons.search,
                   Colors.blue,
                   () => _showResourcesDialog(context),
                 ),
                 _buildActionCard(
                   context,
-                  'Support Groups',
-                  Icons.groups,
+                  'Safe Space',
+                  Icons.shield,
                   Colors.green,
-                  () => _showSupportDialog(context),
+                  () => _showSafeSpaceDialog(context),
                 ),
                 _buildActionCard(
                   context,
-                  'Profile',
-                  Icons.person,
-                  Colors.purple,
-                  () => _showProfileDialog(context),
+                  'More Options',
+                  Icons.more_horiz,
+                  Colors.grey,
+                  () => _showMoreOptionsDialog(context),
                 ),
               ],
             ),
@@ -159,20 +166,52 @@ class HomeScreenMinimal extends StatelessWidget {
                 ],
               ),
             ),
+            
+            const SizedBox(height: 16),
+            
+            // Anonymous Mode Indicator
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.green.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.green.withOpacity(0.3)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.lock, size: 16, color: Colors.green[700]),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Anonymous Mode - Your privacy is protected',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.green[700],
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildActionCard(BuildContext context, String title, IconData icon, Color color, VoidCallback onTap) {
+  Widget _buildActionCard(BuildContext context, String title, IconData icon, Color color, VoidCallback onTap, {bool isEmergency = false}) {
     return Card(
-      elevation: 4,
+      elevation: isEmergency ? 8 : 4,
+      color: isEmergency ? Colors.red.withOpacity(0.1) : null,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.all(16),
+          decoration: isEmergency ? BoxDecoration(
+            border: Border.all(color: Colors.red.withOpacity(0.3), width: 2),
+            borderRadius: BorderRadius.circular(12),
+          ) : null,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -182,6 +221,7 @@ class HomeScreenMinimal extends StatelessWidget {
                 title,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: isEmergency ? Colors.red[800] : null,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -192,16 +232,77 @@ class HomeScreenMinimal extends StatelessWidget {
     );
   }
 
+  // Quick Exit Functionality
+  int _exitTapCount = 0;
+  
+  void _handleQuickExit(BuildContext context) {
+    _exitTapCount++;
+    
+    if (_exitTapCount >= 3) {
+      // Triple tap - exit immediately
+      Navigator.of(context).pop();
+      return;
+    }
+    
+    // Show quick exit dialog
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Quick Exit'),
+        content: Text('Tap this button ${3 - _exitTapCount} more times to exit immediately.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            child: const Text('Exit Now'),
+          ),
+        ],
+      ),
+    );
+    
+    // Reset counter after 3 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      _exitTapCount = 0;
+    });
+  }
+
   void _showEmergencyDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Emergency Support'),
-        content: const Text('This feature provides immediate emergency contacts and crisis support resources. In a full implementation, this would connect to local emergency services.'),
+        title: const Row(
+          children: [
+            Icon(Icons.emergency, color: Colors.red),
+            SizedBox(width: 8),
+            Text('Emergency Support'),
+          ],
+        ),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('🚨 Ghana Emergency Services:'),
+            Text('Police: 191'),
+            Text('Fire: 192'),
+            Text('Ambulance: 193'),
+            Text(''),
+            Text('🆘 Crisis Support:'),
+            Text('Domestic Violence: 0800-800-800'),
+            Text('Crisis Line: +233 50 123 4567'),
+            Text(''),
+            Text('You are not alone. Help is available 24/7.'),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: const Text('Close'),
           ),
         ],
       ),
@@ -224,32 +325,80 @@ class HomeScreenMinimal extends StatelessWidget {
     );
   }
 
-  void _showSupportDialog(BuildContext context) {
+  void _showSafeSpaceDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Support Groups'),
-        content: const Text('Connect with peer support groups and share success stories in a safe, moderated environment.'),
+        title: const Row(
+          children: [
+            Icon(Icons.shield, color: Colors.green),
+            SizedBox(width: 8),
+            Text('Safe Space'),
+          ],
+        ),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('🛡️ Community Support:'),
+            Text('• Peer support groups'),
+            Text('• Success stories'),
+            Text('• Anonymous sharing'),
+            Text('• Moderated environment'),
+            Text(''),
+            Text('💬 Chat Support:'),
+            Text('• WhatsApp groups'),
+            Text('• Professional counselors'),
+            Text('• Crisis intervention'),
+            Text(''),
+            Text('This is your safe space to heal and grow.'),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: const Text('Close'),
           ),
         ],
       ),
     );
   }
 
-  void _showProfileDialog(BuildContext context) {
+  void _showMoreOptionsDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Profile'),
-        content: const Text('Manage your profile, privacy settings, and emergency contacts. Your safety and privacy are our priority.'),
+        title: const Row(
+          children: [
+            Icon(Icons.more_horiz, color: Colors.grey),
+            SizedBox(width: 8),
+            Text('More Options'),
+          ],
+        ),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('⚙️ Settings:'),
+            Text('• Privacy settings'),
+            Text('• Emergency contacts'),
+            Text('• App preferences'),
+            Text(''),
+            Text('📱 Account:'),
+            Text('• Profile management'),
+            Text('• Data export'),
+            Text('• Delete account'),
+            Text(''),
+            Text('ℹ️ About:'),
+            Text('• App information'),
+            Text('• Support contacts'),
+            Text('• Feedback'),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
+            child: const Text('Close'),
           ),
         ],
       ),
