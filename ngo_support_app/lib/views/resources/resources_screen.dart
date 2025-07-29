@@ -383,13 +383,13 @@ class _ResourceCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: resource.isAvailable ? Colors.green[100] : Colors.orange[100],
+                        color: resource.status == ResourceStatus.available ? Colors.green[100] : Colors.orange[100],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        resource.isAvailable ? '✅ Available' : '🔄 Coming Soon',
+                        resource.status == ResourceStatus.available ? '✅ Available' : '🔄 Coming Soon',
                         style: TextStyle(
-                          color: resource.isAvailable ? Colors.green[800] : Colors.orange[800],
+                          color: resource.status == ResourceStatus.available ? Colors.green[800] : Colors.orange[800],
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
