@@ -184,13 +184,11 @@ function donate(amount) {
         value: amount
     });
 
-    // Redirect to payment processor (replace with actual URL)
-    const paymentUrl = `https://payment-processor.com/donate?amount=${amount}&currency=GHS&cause=beacon-of-new-beginnings`;
+    // Redirect to Beacon of New Beginnings donation page
+    const donationUrl = `https://beaconnewbeginnings.org/donate?amount=${amount}&currency=GHS`;
     
     if (confirm(`Donate ₵${amount} to Beacon of New Beginnings Ghana?`)) {
-        // In production, this would redirect to Stripe/Paystack
-        alert(`Thank you for your ₵${amount} donation! This would redirect to secure payment.`);
-        // window.location.href = paymentUrl;
+        window.location.href = donationUrl;
     }
 }
 
