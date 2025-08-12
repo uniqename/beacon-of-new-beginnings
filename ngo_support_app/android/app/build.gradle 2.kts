@@ -32,7 +32,7 @@ android {
     defaultConfig {
         applicationId = "com.beaconghana.supportapp"
         minSdk = 23  // Required for security features and encryption
-        targetSdk = 35  // Android 15 compatibility
+        targetSdk = 34  // Latest Android API
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         

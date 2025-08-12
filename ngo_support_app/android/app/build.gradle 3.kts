@@ -15,7 +15,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.beaconghana.supportapp"
+    namespace = "com.beaconnewbeginnings.ngo_support_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -30,9 +30,9 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.beaconghana.supportapp"
+        applicationId = "com.beaconnewbeginnings.ngo_support_app"
         minSdk = 23  // Required for security features and encryption
-        targetSdk = 35  // Android 15 compatibility
+        targetSdk = 34  // Latest Android API
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         

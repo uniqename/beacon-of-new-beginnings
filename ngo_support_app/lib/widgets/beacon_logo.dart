@@ -21,45 +21,61 @@ class BeaconLogo extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Beacon Icon
+        // Actual Beacon Logo
         Container(
           width: size,
           height: size,
           decoration: BoxDecoration(
-            color: logoColor,
-            shape: BoxShape.circle,
+            borderRadius: BorderRadius.circular(8),
           ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Outer glow effect
-              Container(
-                width: size * 0.8,
-                height: size * 0.8,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  shape: BoxShape.circle,
-                ),
-              ),
-              // Inner beacon light
-              Container(
-                width: size * 0.5,
-                height: size * 0.5,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              // Center dot
-              Container(
-                width: size * 0.2,
-                height: size * 0.2,
-                decoration: BoxDecoration(
-                  color: logoColor,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ],
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'assets/images/beacon_logo.png',
+              width: size,
+              height: size,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                // Fallback to custom beacon icon if image fails to load
+                return Container(
+                  width: size,
+                  height: size,
+                  decoration: BoxDecoration(
+                    color: logoColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: size * 0.8,
+                        height: size * 0.8,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.3),
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Container(
+                        width: size * 0.5,
+                        height: size * 0.5,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      Container(
+                        width: size * 0.2,
+                        height: size * 0.2,
+                        decoration: BoxDecoration(
+                          color: logoColor,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
         

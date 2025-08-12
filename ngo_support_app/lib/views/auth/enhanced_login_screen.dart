@@ -39,8 +39,8 @@ class _EnhancedLoginScreenState extends State<EnhancedLoginScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: Image.asset(
-                          'assets/images/logo.png',
-                          fit: BoxFit.cover,
+                          'assets/images/beacon_logo.png',
+                          fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
                             return Container(
                               width: 80,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/beacon_division.dart';
+import '../applications/application_form_screen.dart';
 
 class JobDetailScreen extends StatelessWidget {
   final JobOpportunity job;
@@ -47,7 +48,7 @@ class JobDetailScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          _showApplicationDialog(context);
+          _navigateToApplication(context);
         },
         backgroundColor: Color(0xFF2E8B57),
         icon: Icon(Icons.send, color: Colors.white),
@@ -392,68 +393,33 @@ class JobDetailScreen extends StatelessWidget {
     return '${date.day}/${date.month}/${date.year}';
   }
 
-  void _showApplicationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Apply for ${job.title}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Your application will be sent to:'),
-            SizedBox(height: 8),
-            Text(
-              job.applicationEmail,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2E8B57),
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Please make sure you have:\n'
-              '• Updated resume\n'
-              '• Cover letter\n'
-              '• Required certifications',
-              style: TextStyle(fontSize: 14),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _submitApplication(context);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF2E8B57),
-            ),
-            child: Text(
-              'Send Application',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  void _submitApplication(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Application submitted successfully!'),
-        backgroundColor: Color(0xFF2E8B57),
-        action: SnackBarAction(
-          label: 'View Status',
-          textColor: Colors.white,
-          onPressed: () {
-            // Handle view application status
-          },
+  void _navigateToApplication(BuildContext context) {
+    // Create a dummy division for the job application
+    BeaconDivision dummyDivision = BeaconDivision(
+      id: 'job_division',
+      name: 'Job Application',
+      shortName: 'Jobs',
+      description: 'Job applications for ${job.title}',
+      icon: 'work',
+      color: '#2E8B57',
+      services: [],
+      resources: [],
+      isAvailable: true,
+      capacity: 100,
+      contactEmail: job.applicationEmail,
+      contactPhone: '',
+      donationUrl: 'https://beaconnewbeginnings.org/donate',
+      jobOpenings: [job],
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ApplicationFormScreen(
+          division: dummyDivision,
+          serviceType: 'job',
+          jobOpportunity: job,
         ),
       ),
     );

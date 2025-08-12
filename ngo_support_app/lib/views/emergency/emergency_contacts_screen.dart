@@ -125,9 +125,9 @@ class EmergencyContactsScreen extends StatelessWidget {
                       return _buildContactCard(
                         context,
                         resource.name,
-                        resource.phoneNumber,
-                        _getContactIcon(resource.category),
-                        _getContactColor(resource.category),
+                        resource.phone ?? '',
+                        _getContactIcon(resource.typeDisplayName),
+                        _getContactColor(resource.typeDisplayName),
                       );
                     }).toList(),
                   ],
@@ -155,15 +155,15 @@ class EmergencyContactsScreen extends StatelessWidget {
     
     if (locationService.isInGhana) {
       resources = LocationBasedResources.getGhanaResources()
-          .where((resource) => resource.isEmergency)
+          .where((resource) => resource.type == ResourceType.emergency || resource.is24Hours)
           .toList();
     } else if (locationService.isInUSA) {
       resources = LocationBasedResources.getUSAResources(locationService.currentState)
-          .where((resource) => resource.isEmergency)
+          .where((resource) => resource.type == ResourceType.emergency || resource.is24Hours)
           .toList();
     } else {
       resources = LocationBasedResources.getInternationalResources()
-          .where((resource) => resource.isEmergency)
+          .where((resource) => resource.type == ResourceType.emergency || resource.is24Hours)
           .toList();
     }
     

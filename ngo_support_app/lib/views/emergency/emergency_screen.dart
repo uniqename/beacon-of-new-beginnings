@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth_service.dart';
 import '../../services/emergency_service.dart';
+import 'emergency_locations_screen.dart';
 
 class EmergencyScreen extends StatefulWidget {
   const EmergencyScreen({super.key});
@@ -179,7 +180,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                 subtitle: '24/7 Support & Counseling',
                 phoneNumber: '+233-XXX-XXXX', // Replace with actual hotline
                 color: Colors.orange,
-                onTap: () => _makeEmergencyCall('+233XXXXXXX'),
+                onTap: () => _makeEmergencyCall('0800800800'),
               ),
 
               const SizedBox(height: 12),
@@ -229,7 +230,12 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                   subtitle: const Text('Find nearby safe accommodation'),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    // Navigate to shelter finder
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmergencyLocationsScreen(locationType: 'shelters'),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -246,7 +252,12 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                   subtitle: const Text('Hospitals and clinics nearby'),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    // Navigate to medical centers
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmergencyLocationsScreen(locationType: 'medical'),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -263,7 +274,12 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
                   subtitle: const Text('Nearest police stations'),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    // Navigate to police stations
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmergencyLocationsScreen(locationType: 'police'),
+                      ),
+                    );
                   },
                 ),
               ),

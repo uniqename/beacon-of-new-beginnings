@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
 import '../../models/resource.dart';
 import '../../services/resource_service.dart';
+import '../../services/auth_service.dart';
 
 class ResourcesScreen extends StatefulWidget {
   const ResourcesScreen({super.key});
@@ -565,36 +567,155 @@ class _ResourceRequestSheetState extends State<_ResourceRequestSheet> {
 
     setState(() => _isSubmitting = true);
 
-    // In a real app, you'd get the current user ID from auth
-    const userId = 'current-user-id';
+    try {
+      // Get current user from auth service
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final currentUser = authService.currentUser;
+      
+      String userId;
+      if (currentUser != null) {
+        userId = currentUser.id;
+      } else {
+        // For anonymous users, create a temporary ID or prompt for registration
+        _handleAnonymousResourceRequest();
+        return;
+      }
 
-    final success = await ResourceService().requestResource(
-      resourceId: widget.resource.id,
-      userId: userId,
-      notes: _notesController.text.trim().isNotEmpty 
-          ? _notesController.text.trim() 
-          : null,
-      preferredDate: _preferredDate,
-    );
-
-    setState(() => _isSubmitting = false);
-
-    if (success && mounted) {
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Resource request submitted successfully'),
-          backgroundColor: Colors.green,
-        ),
+      final success = await ResourceService().requestResource(
+        resourceId: widget.resource.id,
+        userId: userId,
+        notes: _notesController.text.trim().isNotEmpty 
+            ? _notesController.text.trim() 
+            : null,
+        preferredDate: _preferredDate,
       );
-    } else if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to submit request. Please try again.'),
-          backgroundColor: Colors.red,
-        ),
-      );
+
+      setState(() => _isSubmitting = false);
+
+      if (success && mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Resource request submitted successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to submit request. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      setState(() => _isSubmitting = false);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error submitting request: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
+  }
+
+  void _handleAnonymousResourceRequest() async {
+    setState(() => _isSubmitting = false);
+    
+    if (!mounted) return;
+    
+    Navigator.pop(context); // Close the resource request sheet
+    
+    // Show dialog explaining options for anonymous users
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        icon: Icon(Icons.info_outline, color: Colors.blue, size: 48),
+        title: Text('Resource Access'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('To submit resource requests, please choose an option:'),
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.green[50],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.green[200]!),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.phone, color: Colors.green[600], size: 16),
+                      SizedBox(width: 8),
+                      Text(
+                        'Quick Access Options:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    '• Call directly: ${widget.resource.phone ?? "Contact number available"}\n'
+                    '• Email: ${widget.resource.email ?? "Contact email available"}\n'
+                    '• Visit in person at their location',
+                    style: TextStyle(
+                      color: Colors.green[700],
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Or create an account for:',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            SizedBox(height: 8),
+            Text(
+              '• Online resource requests\n'
+              '• Case tracking\n'
+              '• Follow-up notifications\n'
+              '• Access to additional services',
+              style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          if (widget.resource.phone != null)
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+                final Uri phoneUri = Uri(scheme: 'tel', path: widget.resource.phone!);
+                launchUrl(phoneUri);
+              },
+              icon: Icon(Icons.phone, size: 16),
+              label: Text('Call Now'),
+            ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/register');
+            },
+            child: Text('Create Account'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

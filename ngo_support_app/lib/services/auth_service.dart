@@ -9,11 +9,13 @@ import '../models/user.dart';
 class AuthService {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
-  AuthService._internal() {
-    _initialize();
-  }
+  AuthService._internal();
   
-  void _initialize() async {
+  bool _initialized = false;
+  
+  Future<void> initialize() async {
+    if (_initialized) return;
+    
     try {
       // Check for existing session
       final prefs = await SharedPreferences.getInstance();
@@ -29,8 +31,10 @@ class AuthService {
         );
       }
       _authStateController.add(_currentUser);
+      _initialized = true;
     } catch (e) {
       _authStateController.add(null);
+      _initialized = true;
     }
   }
 
