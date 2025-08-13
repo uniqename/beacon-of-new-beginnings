@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.beaconghana.supportapp"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35  // Android 15 (API level 35)
     ndkVersion = "27.0.12077973"
 
     compileOptions {
