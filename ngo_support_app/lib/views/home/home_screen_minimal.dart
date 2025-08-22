@@ -3,8 +3,14 @@ import 'package:provider/provider.dart';
 import '../../services/auth_service_minimal.dart';
 import '../auth/login_screen_minimal.dart';
 
-class HomeScreenMinimal extends StatelessWidget {
+class HomeScreenMinimal extends StatefulWidget {
   const HomeScreenMinimal({super.key});
+
+  @override
+  State<HomeScreenMinimal> createState() => _HomeScreenMinimalState();
+}
+
+class _HomeScreenMinimalState extends State<HomeScreenMinimal> {
 
   @override
   Widget build(BuildContext context) {

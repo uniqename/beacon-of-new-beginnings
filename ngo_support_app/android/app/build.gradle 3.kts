@@ -15,8 +15,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.beaconghana.supportapp"
-    compileSdk = 35  // Android 15 (API level 35)
+    namespace = "com.beaconnewbeginnings.ngo_support_app"
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -30,9 +30,9 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.beaconghana.supportapp"
+        applicationId = "com.beaconnewbeginnings.ngo_support_app"
         minSdk = 23  // Required for security features and encryption
-        targetSdk = 35  // Android 15 compatibility
+        targetSdk = 34  // Latest Android API
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         
@@ -62,9 +62,8 @@ android {
             } else {
                 signingConfigs.getByName("debug")
             }
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }

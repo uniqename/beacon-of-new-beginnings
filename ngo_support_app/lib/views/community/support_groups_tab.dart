@@ -102,6 +102,67 @@ class _SupportGroupsTabState extends State<SupportGroupsTab> {
 
             const SizedBox(height: 24),
 
+            // Account requirement notice
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.orange[50],
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.orange[300]!),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.account_circle, color: Colors.orange[600]),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Account Required',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange[800],
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'You MUST create a secure account to view and join support groups. This protects your privacy and ensures a safe environment for all members.',
+                              style: TextStyle(
+                                color: Colors.orange[700],
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
+                      icon: Icon(Icons.person_add),
+                      label: Text('Create Account Now'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange[600],
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
             // Safety notice
             Container(
               padding: const EdgeInsets.all(16),
@@ -284,11 +345,83 @@ class _SupportGroupsTabState extends State<SupportGroupsTab> {
   }
 
   void _viewGroup(SupportGroup group) {
-    // Navigate to group chat/details
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Group chat feature coming soon'),
-        backgroundColor: Colors.blue,
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.account_circle, color: Colors.orange[600]),
+            SizedBox(width: 12),
+            Expanded(child: Text('Account Required')),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'To view and participate in "${group.name}", you need to create a secure account.',
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.orange[50],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.orange[200]!),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.security, size: 16, color: Colors.orange[600]),
+                      SizedBox(width: 8),
+                      Text(
+                        'Why accounts are required:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    '• Protects member privacy and safety\n'
+                    '• Enables secure communication\n'
+                    '• Allows anonymous participation\n'
+                    '• Ensures professional moderation',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.orange[600],
+                      height: 1.4,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Maybe Later'),
+          ),
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/register');
+            },
+            icon: Icon(Icons.person_add, size: 16),
+            label: Text('Create Account'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange[600],
+              foregroundColor: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }

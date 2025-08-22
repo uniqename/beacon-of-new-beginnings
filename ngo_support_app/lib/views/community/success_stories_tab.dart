@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'share_story_screen.dart';
 
 class SuccessStoriesTab extends StatefulWidget {
   const SuccessStoriesTab({super.key});
@@ -262,31 +263,10 @@ I have a circle of people now who care about me. Real friends who celebrate my w
   }
 
   void _shareStory() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Share Your Story'),
-        content: const Text(
-          'Your journey could inspire and help others who are on a similar path. Would you like to share your success story with the community?'
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Maybe Later'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Story submission feature coming soon'),
-                  backgroundColor: Colors.blue,
-                ),
-              );
-            },
-            child: const Text('Share Story'),
-          ),
-        ],
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ShareStoryScreen(),
       ),
     );
   }

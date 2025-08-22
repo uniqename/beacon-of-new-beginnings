@@ -172,7 +172,7 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
             Row(
               children: [
                 Icon(
-                  _getCategoryIcon(resource.category),
+                  _getCategoryIcon(resource.typeDisplayName),
                   color: Theme.of(context).primaryColor,
                   size: 24,
                 ),
@@ -185,7 +185,7 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
                     ),
                   ),
                 ),
-                if (resource.isEmergency)
+                if (resource.type == ResourceType.emergency || resource.is24Hours)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
@@ -209,13 +209,13 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
             
             const SizedBox(height: 8),
             
-            if (resource.address.isNotEmpty) ...[
+            if (resource.address != null && resource.address!.isNotEmpty) ...[
               Row(
                 children: [
                   const Icon(Icons.location_on, size: 16, color: Colors.grey),
                   const SizedBox(width: 4),
                   Text(
-                    resource.address,
+                    resource.address!,
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ],
@@ -226,9 +226,9 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
             // Action Buttons
             Row(
               children: [
-                if (resource.phoneNumber.isNotEmpty)
+                if (resource.phone != null && resource.phone!.isNotEmpty)
                   ElevatedButton.icon(
-                    onPressed: () => _makeCall(resource.phoneNumber),
+                    onPressed: () => _makeCall(resource.phone!),
                     icon: const Icon(Icons.phone, size: 16),
                     label: const Text('Call'),
                     style: ElevatedButton.styleFrom(
@@ -236,9 +236,9 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
                     ),
                   ),
                 const SizedBox(width: 8),
-                if (resource.website.isNotEmpty)
+                if (resource.website != null && resource.website!.isNotEmpty)
                   OutlinedButton.icon(
-                    onPressed: () => _launchWebsite(resource.website),
+                    onPressed: () => _launchWebsite(resource.website!),
                     icon: const Icon(Icons.language, size: 16),
                     label: const Text('Website'),
                     style: OutlinedButton.styleFrom(
@@ -308,7 +308,7 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
     // Filter by category
     if (_selectedCategory != null) {
       allResources = allResources.where((resource) => 
-          resource.category == _selectedCategory).toList();
+          resource.typeDisplayName == _selectedCategory).toList();
     }
 
     // Filter by search query
@@ -316,7 +316,7 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
       allResources = allResources.where((resource) =>
           resource.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           resource.description.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-          resource.category.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
+          resource.typeDisplayName.toLowerCase().contains(_searchQuery.toLowerCase())).toList();
     }
 
     return allResources;

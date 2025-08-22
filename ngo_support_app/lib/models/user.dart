@@ -52,7 +52,7 @@ class AppUser {
     );
   }
 
-  // For backward compatibility with Firebase references
+  // User ID for local storage and backend API references
   factory AppUser.fromFirestore(dynamic doc) {
     final data = doc.data() as Map<String, dynamic>;
     return AppUser.fromMap(data);
@@ -88,7 +88,7 @@ class AppUser {
     );
   }
 
-  // For backward compatibility with Firebase references
+  // User ID for local storage and backend API references
   Map<String, dynamic> toFirestore() {
     return toMap();
   }

@@ -113,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(40),
                       child: Image.asset(
-                        'assets/images/logo.png',
+                        'assets/images/beacon_logo.png',
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(

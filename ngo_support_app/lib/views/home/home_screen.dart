@@ -64,8 +64,64 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class HomeTabScreen extends StatelessWidget {
+class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({super.key});
+
+  @override
+  _HomeTabScreenState createState() => _HomeTabScreenState();
+}
+
+class _HomeTabScreenState extends State<HomeTabScreen> {
+  int _logoTapCount = 0;
+  DateTime? _lastTap;
+
+  void _handleLogoTap() {
+    DateTime now = DateTime.now();
+    if (_lastTap != null && now.difference(_lastTap!).inSeconds > 2) {
+      _logoTapCount = 0;
+    }
+    
+    _logoTapCount++;
+    _lastTap = now;
+    
+    if (_logoTapCount >= 7) {
+      _logoTapCount = 0;
+      _showAdminAccess();
+    }
+  }
+
+  void _showAdminAccess() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.admin_panel_settings, color: Colors.orange[600]),
+            SizedBox(width: 12),
+            Text('Admin Access'),
+          ],
+        ),
+        content: Text('Access admin dashboard to manage divisions and services?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/admin');
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange[600],
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Access Admin'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,28 +134,31 @@ class HomeTabScreen extends StatelessWidget {
             children: [
               // Logo header
               Center(
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFF2E8B57),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Icon(
-                            Icons.home,
-                            size: 30,
-                            color: Colors.white,
-                          ),
-                        );
-                      },
+                child: GestureDetector(
+                  onTap: _handleLogoTap,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.asset(
+                        'assets/images/beacon_logo.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xFF2E8B57),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Icon(
+                              Icons.home,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -120,7 +179,7 @@ class HomeTabScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hello, Brave Soul',
+                              'Welcome to Beacon of New Beginnings',
                               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -247,13 +306,15 @@ class HomeTabScreen extends StatelessWidget {
                 children: [
                   _QuickAccessCard(
                     icon: Icons.home_outlined,
-                    title: 'BeaconGH Services',
-                    subtitle: 'AI-powered resource matching',
+                    title: 'Shelter',
+                    subtitle: 'Safe housing options',
                     color: Colors.blue,
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => ServiceDivisionsScreen(initialFilter: 'shelter'),
+                        ),
                       );
                     },
                   ),
@@ -265,7 +326,9 @@ class HomeTabScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => ServiceDivisionsScreen(initialFilter: 'counseling'),
+                        ),
                       );
                     },
                   ),
@@ -277,7 +340,9 @@ class HomeTabScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => ServiceDivisionsScreen(initialFilter: 'legal'),
+                        ),
                       );
                     },
                   ),
@@ -289,7 +354,9 @@ class HomeTabScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ServiceDivisionsScreen()),
+                        MaterialPageRoute(
+                          builder: (context) => ServiceDivisionsScreen(initialFilter: 'healthcare'),
+                        ),
                       );
                     },
                   ),
@@ -385,6 +452,8 @@ class _QuickAccessCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 4),
               Text(
@@ -393,6 +462,8 @@ class _QuickAccessCard extends StatelessWidget {
                   color: Colors.grey[600],
                 ),
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

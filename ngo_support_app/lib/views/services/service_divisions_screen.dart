@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../models/beacon_division.dart';
 import '../../services/smart_ai_service.dart';
 import 'division_detail_screen.dart';
 
 class ServiceDivisionsScreen extends StatefulWidget {
+  final String? initialFilter;
+  
+  const ServiceDivisionsScreen({Key? key, this.initialFilter}) : super(key: key);
+  
   @override
   _ServiceDivisionsScreenState createState() => _ServiceDivisionsScreenState();
 }
@@ -17,6 +22,10 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
   @override
   void initState() {
     super.initState();
+    // Set initial filter if provided
+    if (widget.initialFilter != null) {
+      _selectedHelpType = widget.initialFilter!;
+    }
     _loadDivisions();
   }
 
@@ -38,7 +47,7 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'BeaconGH Services',
+          'Beacon Services',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -193,7 +202,7 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'AI-Powered Resource Matching',
+                  'Smart Resource Matching',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue[800],
@@ -202,7 +211,7 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  'Services are prioritized based on your needs, with BeaconGH options shown first',
+                  'Services are matched to your specific needs and location',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.blue[600],
@@ -550,7 +559,8 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
               title: Text('Email'),
               subtitle: Text(division.contactEmail),
               onTap: () {
-                // Handle email tap
+                Navigator.pop(context);
+                _sendEmail(division);
               },
             ),
             ListTile(
@@ -558,8 +568,157 @@ class _ServiceDivisionsScreenState extends State<ServiceDivisionsScreen> {
               title: Text('Phone'),
               subtitle: Text(division.contactPhone),
               onTap: () {
-                // Handle phone tap
+                Navigator.pop(context);
+                _callDivision(division);
               },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _sendEmail(BeaconDivision division) async {
+    final String subject = Uri.encodeComponent('General Inquiry - ${division.name}');
+    final String body = Uri.encodeComponent(
+      'Hello ${division.name} team,\n\n'
+      'I am interested in learning more about your services. '
+      'Could you please provide information about:\n\n'
+      '• Available services\n'
+      '• How to access support\n'
+      '• Eligibility requirements\n'
+      '• Current availability\n\n'
+      'Thank you for your time and assistance.\n\n'
+      'Best regards'
+    );
+    
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: division.contactEmail,
+      query: 'subject=$subject&body=$body',
+    );
+
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(emailUri);
+      } else {
+        _showEmailFallback(division);
+      }
+    } catch (e) {
+      _showEmailFallback(division);
+    }
+  }
+
+  void _callDivision(BeaconDivision division) async {
+    final Uri phoneUri = Uri(scheme: 'tel', path: division.contactPhone);
+    
+    try {
+      if (await canLaunchUrl(phoneUri)) {
+        await launchUrl(phoneUri);
+      } else {
+        _showPhoneFallback(division);
+      }
+    } catch (e) {
+      _showPhoneFallback(division);
+    }
+  }
+
+  void _showEmailFallback(BeaconDivision division) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.email, color: Colors.blue[600]),
+            SizedBox(width: 12),
+            Text('Contact Information'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Please contact ${division.name} directly:'),
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Email:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 4),
+                  SelectableText(
+                    division.contactEmail,
+                    style: TextStyle(color: Colors.blue[700]),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPhoneFallback(BeaconDivision division) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.phone, color: Colors.green[600]),
+            SizedBox(width: 12),
+            Text('Call ${division.shortName}'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Please call directly:'),
+            SizedBox(height: 16),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.green[50],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.green[200]!),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.phone, color: Colors.green[600]),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: SelectableText(
+                      division.contactPhone,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green[700],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

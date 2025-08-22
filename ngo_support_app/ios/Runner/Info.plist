@@ -51,5 +51,9 @@
 	<string>Beacon of New Beginnings needs location access to help connect you with nearby emergency services, support resources, and community assistance when you need help.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Beacon of New Beginnings uses your location to provide nearby emergency services, support resources, and community assistance when you need help.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Beacon of New Beginnings needs access to your photo library to allow you to upload profile pictures, document incidents for reporting, and share images when requesting support services.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Beacon of New Beginnings needs camera access to take photos for incident documentation, profile pictures, and when reporting issues to support services.</string>
 </dict>
 </plist>

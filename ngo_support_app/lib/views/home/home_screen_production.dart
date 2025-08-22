@@ -112,7 +112,7 @@ class _HomeScreenProductionState extends State<HomeScreenProduction> {
           children: [
             Text(
               isAnonymous || currentUser == null
-                  ? 'Welcome, Brave Soul'
+                  ? 'Welcome to Beacon of New Beginnings'
                   : 'Welcome back, ${currentUser.name}',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,

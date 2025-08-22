@@ -22,11 +22,21 @@ class _DonationScreenState extends State<DonationScreen> {
   final _emailController = TextEditingController();
   
   String _selectedFrequency = 'one-time';
+  String _selectedCurrency = 'USD';
+  String _selectedPaymentMethod = 'card';
   bool _isAnonymous = false;
   bool _agreeToTerms = false;
   int? _selectedAmount;
 
-  final List<int> _quickAmounts = [25, 50, 100, 250, 500, 1000];
+  final Map<String, List<int>> _quickAmounts = {
+    'USD': [25, 50, 100, 250, 500, 1000],
+    'GHS': [100, 200, 500, 1000, 2000, 5000],
+  };
+
+  final Map<String, List<String>> _paymentMethods = {
+    'USD': ['card', 'paypal', 'bank_transfer', 'apple_pay', 'google_pay'],
+    'GHS': ['card', 'momo', 'bank_transfer'],
+  };
 
   @override
   void initState() {
